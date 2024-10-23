@@ -7,7 +7,12 @@
             to: '/dashboard'
         },
         {
-            title: 'Mis contactos',
+            title: 'Actividad',
+            icon: 'mdi-chart-timeline-variant',
+            to: '/dashboard/activities'
+        },
+        {
+            title: 'Contactos',
             icon: 'mdi-account',
             to: '/dashboard/contacts'
         },
