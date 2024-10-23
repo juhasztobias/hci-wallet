@@ -4,5 +4,5 @@
 
 <route lang="yaml">
 meta:
-    layout: auth-layout
+    layout: auth.layout
 </route>
