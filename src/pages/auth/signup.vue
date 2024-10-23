@@ -26,7 +26,7 @@
 
 <template>
     <v-card-text>
-            <h3 class="text-center">Contanos un poco de vos.</h3>
+            <h3 class="tw-text-lg tw-font-[500] tw-mb-8 text-center">Contanos un poco de vos.</h3>
             <v-form @submit.prevent="submitForm">
               <v-text-field
                 label="Nombre"
