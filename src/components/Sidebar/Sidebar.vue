@@ -17,9 +17,9 @@
             to: '/dashboard/contacts'
         },
         {
-            title: 'Item 3',
-            icon: 'mdi-bell',
-            to: '/'
+            title: 'Configuración',
+            icon: 'mdi-cog',
+            to: '/dashboard/settings'
         }
     ])
 

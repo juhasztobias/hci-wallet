@@ -1,9 +1,9 @@
 <template>
-    <h1>Home</h1>
+    <h1>Configuración</h1>
     <p>This is the home page</p>
 </template>
 
 <route lang="yaml">
 meta:
-    layout: custom
+    layout: dashboard.layout 
 </route>
