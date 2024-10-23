@@ -1,10 +1,10 @@
 <template>
-  <v-app>
-    <v-main style="padding-top: 1000px;">
-        <p>This is a custom layout</p>
-        <router-view />
-    </v-main>
-
-    <AppFooter />
-  </v-app>
+  <div class="tw-grid tw-grid-cols-[300px,1fr] tw-p-2 tw-gap-8">
+      <Sidebar />
+      <div class="tw-overflow-y-auto tw-max-h-[calc(100vh-2rem)]">
+          <router-view />
+      </div>
+  </div>
 </template>
+<script setup>
+</script>
