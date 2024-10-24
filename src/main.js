@@ -15,6 +15,8 @@ import { createApp } from 'vue'
 
 const app = createApp(App)
 
+// app.use(VueApexCharts);
+
 registerPlugins(app)
 
 app.mount('#app')

@@ -36,10 +36,23 @@ router.isReady().then(() => {
 
 router.beforeEach((to, from, next) => {
   const authStore = useAuthStore();
-  if(!authStore.isAuthenticated && to.meta.requiresAuth) {
+
+  if(!authStore.isLoggedIn && to.meta.requiresAuth) {
     next('/auth/signin');
     return;
   }
+
+  const authPaths = [
+    '/auth/signin', 
+    '/auth/signup', 
+    '/auth/forgot-password', 
+    '/auth/reset-password'
+  ];
+  if(authStore.isLoggedIn && authPaths.includes(to.path)) {
+    next('/dashboard');
+    return;
+  }
+
   next();
 })
 
