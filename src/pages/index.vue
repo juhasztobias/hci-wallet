@@ -1,9 +1,5 @@
-<template>
-  <Signin/>
-</template>
-
 <script setup>
-import Signin from './auth/signin.vue';
-
-  //
+  import { useRouter } from 'vue-router';
+  const router = useRouter();
+  router.push('/dashboard');
 </script>

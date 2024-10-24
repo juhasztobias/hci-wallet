@@ -33,11 +33,11 @@ const recoverPassword = () => {
 </script>
 
 <template>
-  <div class="background">
+  <!-- <div class="background">
     <v-card class="login-card">
       <div class="logo-container">
         <img class="logo" src="@/assets/logo.png" alt="Logo" />
-      </div>
+      </div> -->
       <v-form @submit.prevent="handleSubmit">
         <v-text-field
           label="Email"
@@ -96,8 +96,8 @@ const recoverPassword = () => {
           <v-icon left>mdi-facebook</v-icon> Iniciar sesión con Facebook
         </v-btn>
       </v-form>
-    </v-card>
-  </div>
+    <!-- </v-card>
+  </div> -->
 </template>
 
 <style scoped>
