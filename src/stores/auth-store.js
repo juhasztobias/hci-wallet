@@ -16,8 +16,7 @@ export const useAuthStore = defineStore("auth", {
         "getUser": (state) => state.user,
     },
     "actions": {
-        "login": async ({ state, dispatch }) => {
-        },
+        "login": async ({ state, dispatch }) => {},
         "logout": async ({ state, dispatch }) => {}
     },
 })
