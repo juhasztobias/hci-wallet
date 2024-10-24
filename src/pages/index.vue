@@ -1,9 +1,7 @@
 <template>
-  <Signin/>
+  <v-btn class="btn-login">Registrarse</v-btn>
 </template>
 
 <script setup>
-import Signin from './auth/signin.vue';
-
-  //
+  
 </script>
