@@ -1,99 +1,173 @@
 <script setup>
-  import { ref } from 'vue';
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
-  const email = ref('')
-  const password = ref('')
-  const router = useRouter()
+const email = ref('');
+const password = ref('');
+const router = useRouter();
 
-  const handleSubmit = () => {
-    console.log('Iniciar sesión con:', email.value, password.value)
-  }
+const handleSubmit = () => {
+  console.log('Iniciar sesión con:', email.value, password.value);
+};
 
-  const register = () => {
-    console.log('Redirigiendo a registro')
-    router.push('/auth/signup')
-  }
+const register = () => {
+  console.log('Redirigiendo a registro');
+  router.push('/auth/signup');
+};
 
-  const loginWithGoogle = () => {
-    console.log('Iniciar sesión con Google')
-  }
+const loginWithGoogle = () => {
+  console.log('Iniciar sesión con Google');
+};
 
-  const loginWithApple = () => {
-    console.log('Iniciar sesión con Apple')
-  }
+const loginWithApple = () => {
+  console.log('Iniciar sesión con Apple');
+};
 
-  const loginWithFacebook = () => {
-    console.log('Iniciar sesión con Facebook')
-  }
+const loginWithFacebook = () => {
+  console.log('Iniciar sesión con Facebook');
+};
 
-  const recoverPassword = () => {
-    console.log('Redirigiendo a recuperación de contraseña')
-  }
+const recoverPassword = () => {
+  console.log('Redirigiendo a recuperación de contraseña');
+};
 </script>
 
 <template>
-    <v-card-text>
-            <v-form @submit.prevent="handleSubmit">
-              <v-text-field
-                label="Correo Electrónico"
-                v-model="email"
-                type="email"
-                placeholder="Introduce tu correo"
-                required
-              ></v-text-field>
-              
-              <v-text-field
-                label="Contraseña"
-                v-model="password"
-                type="password"
-                placeholder="Introduce tu contraseña"
-                required
-              ></v-text-field>
-              
-              <v-btn color="primary" class="mt-4" block type="submit">
-                Iniciar sesión
-              </v-btn>
-              
-              <v-btn color="secondary" class="mt-2" block @click="register">
-                Crear cuenta
-              </v-btn>
-              
-              <v-divider class="my-4"></v-divider>
-              
-              <v-btn
-                class="mb-2"
-                color="red darken-2"
-                block
-                @click="loginWithGoogle"
-              >
-                <v-icon left>mdi-google</v-icon> Iniciar sesión con Google
-              </v-btn>
-              
-              <v-btn
-                class="mb-2"
-                color="black"
-                block
-                @click="loginWithApple"
-              >
-                <v-icon left>mdi-apple</v-icon> Iniciar sesión con Apple
-              </v-btn>
-              
-              <v-btn
-                class="mb-2"
-                color="blue darken-4"
-                block
-                @click="loginWithFacebook"
-              >
-                <v-icon left>mdi-facebook</v-icon> Iniciar sesión con Facebook
-              </v-btn>
-            </v-form>
-            
-            <v-btn text block class="mt-3" @click="recoverPassword">
-              ¿Olvidaste tu contraseña? Recupérala
-            </v-btn>
-          </v-card-text>
+  <div class="background">
+    <v-card class="login-card">
+      <div class="logo-container">
+        <img class="logo" src="@/assets/logo.png" alt="Logo" />
+      </div>
+      <v-form @submit.prevent="handleSubmit">
+        <v-text-field
+          label="Email"
+          v-model="email"
+          type="email"
+          placeholder="Email"
+          required
+        ></v-text-field>
+
+        <v-text-field
+          label="Contraseña"
+          v-model="password"
+          type="password"
+          placeholder="Contraseña"
+          required
+        ></v-text-field>
+
+        <v-btn color="primary" class="submit-btn mt-4" block type="submit">
+          Iniciar sesión
+        </v-btn>
+
+        <v-btn  variant="text" text class="forgot-password-btn" @click="recoverPassword">
+          ¿Olvidaste tu contraseña? Recupérala
+        </v-btn>
+
+        <div class="divider">o</div>
+
+        <v-btn color="primary" class="register-btn mt-4" block @click="register">
+          Crear cuenta
+        </v-btn>
+
+        <v-btn
+          class="google-btn mt-4"
+          color="red darken-2"
+          block
+          @click="loginWithGoogle"
+        >
+          <v-icon left>mdi-google</v-icon> Iniciar sesión con Google
+        </v-btn>
+
+        <v-btn
+          class="apple-btn mt-4"
+          color="black"
+          block
+          @click="loginWithApple"
+        >
+          <v-icon left>mdi-apple</v-icon> Iniciar sesión con Apple
+        </v-btn>
+
+        <v-btn
+          class="facebook-btn mt-4"
+          color="blue darken-4"
+          block
+          @click="loginWithFacebook"
+        >
+          <v-icon left>mdi-facebook</v-icon> Iniciar sesión con Facebook
+        </v-btn>
+      </v-form>
+    </v-card>
+  </div>
 </template>
+
+<style scoped>
+.background {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #001f3f, #0070c0);
+}
+
+.login-card {
+  width: 400px;
+  padding: 30px;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+}
+
+.logo {
+  width: 120px;
+  height: auto;
+  margin-bottom: 30px;
+}
+
+.submit-btn {
+  background-color: #007bff !important;
+  color: white;
+}
+
+.forgot-password-btn {
+  margin-top: 10px;
+  color: #007bff;
+  font-size: 0.9rem;
+}
+
+.divider {
+  margin: 30px 0;
+  text-align: center;
+  color: #999;
+}
+
+.google-btn,
+.apple-btn,
+.facebook-btn,
+.register-btn {
+  margin-top: 15px;
+}
+
+.google-btn {
+  background-color: #db4437;
+  color: white;
+}
+
+.apple-btn {
+  background-color: #333;
+  color: white;
+}
+
+.facebook-btn {
+  background-color: #4267b2;
+  color: white;
+}
+</style>
 
 <route lang="yaml">
 meta:
