@@ -16,4 +16,11 @@ export default createVuetify({
   theme: {
     defaultTheme: 'light',
   },
+  defaults: {
+    VTextField: {
+      variant: 'outlined',
+      labelPlacement: 'outside',
+      
+    }
+  }
 })

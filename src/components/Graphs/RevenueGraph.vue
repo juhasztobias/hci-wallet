@@ -1,31 +1,21 @@
 <template>
-    <h1>Playground</h1>
-    <div class="tw-flex tw-items-center tw-justify-center tw-h-screen">
-        <v-card class="tw-flex tw-flex-col tw-w-[40vw]" elevation="1">
-          <v-card-title class="tw-text-lg tw-font-semibold">
+    <v-card class="tw-flex tw-flex-col tw-w-full" elevation="1">
+        <v-card-title class="tw-text-lg tw-font-semibold">
             Rendimiento
-          </v-card-title>
-          <div class="tw-flex-grow">
+        </v-card-title>
+        <div class="tw-flex-grow">
             <apexchart
                 type="area"
                 :options="chartOptions"
-                :series="series"
+                :series="series_data"
                 :height="200"
             />
-          </div>
-        </v-card>
-    </div>
+        </div>
+    </v-card>
 </template>
 
 <script setup>
-    const series = [{
-            name: 'series1',
-            data: [31, 40, 28, 51, 42, 109, 100]
-          }, {
-            name: 'series2',
-            data: [11, 32, 45, 32, 34, 52, 41]
-          }];
-
+    const { series_data } = defineProps(['series_data'])
     const labels = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
 
     const chartOptions = { 
@@ -34,6 +24,9 @@
               width: '100%',
               type: 'area',
               toolbar: "none",
+              zoom: {
+                enabled: false
+              }
             },
             dataLabels: {
               enabled: false
@@ -43,6 +36,14 @@
             },
             stroke: {
               curve: 'smooth'
+            },
+            fill: {
+              type: 'gradient',
+              gradient: {
+                shadeIntensity: .2,
+                opacityFrom: .4,
+                opacityTo: .05,
+              }
             },
             xaxis: {
               type: 'string',
