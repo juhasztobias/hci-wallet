@@ -4,14 +4,24 @@
  * Configures SASS variables and Vuetify overwrites
  */
 
+
 // https://vuetifyjs.com/features/sass-variables/`
 // ELEVATIONS WITH SHADOWS
 @use 'vuetify/settings' with (
   $color-pack: false,
   $card-elevation: 1,
   $border-radius-root: .5rem, 
-  $button-text-transform: none
+  $button-text-transform: none,
+  $button-border-radius: 5.3px,
+  $button-background: #1D60F8,
+  $button-color: white,
 );
+
+a {
+  color: #1D60F8 !important;
+  text-decoration: underline;
+  text-decoration-color: #1D60F8;
+}
 
 @each $elevation, $shadow in (
   0: 'none',
@@ -26,3 +36,4 @@
     box-shadow: #{$shadow} !important;
   }
 }
+
