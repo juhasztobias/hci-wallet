@@ -1,8 +1,8 @@
 <template>
     <main class="tw-grid tw-grid-cols-[1fr,.4fr] tw-gap-3 tw-p-2 tw-items-start">
         <section class="tw-flex tw-flex-col tw-gap-3 tw-items-center tw-justify-center">
-            <v-card class="tw-w-full tw-min-h-[600px] tw-p-4"></v-card>
-            <v-card class="tw-w-full tw-min-h-[200px] tw-p-4"></v-card>
+            <v-card elevation="1" class="tw-w-full tw-min-h-[600px] tw-p-4"></v-card>
+            <v-card elevation="1" class="tw-w-full tw-min-h-[200px] tw-p-4"></v-card>
         </section>
         <aside class="tw-flex tw-gap-3 tw-flex-col">
             <BillGraph :series_data="series_data"/>

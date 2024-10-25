@@ -1,5 +1,5 @@
 <template>
-    <v-card elevation="1" rounded="lg">
+    <v-card elevation="1">
             <div class="tw-flex tw-flex-col tw-items-center tw-justify-center tw-p-2">
                 <apexchart 
                     type="radialBar"
