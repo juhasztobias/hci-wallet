@@ -56,7 +56,7 @@ const recoverPassword = () => {
           Iniciar sesión
         </v-btn>
 
-        <v-btn  variant="text" text class="forgot-password-btn" @click="recoverPassword">
+        <v-btn variant="text" text class="forgot-password-btn" @click="recoverPassword">
           ¿Olvidaste tu contraseña? Recupérala
         </v-btn>
 
