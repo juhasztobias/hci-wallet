@@ -6,22 +6,21 @@
 
 // Usar configuraciones de Vuetify
 @use 'vuetify/settings' with (
-  $color-pack: false
+  $color-pack: false,
+  $button-border-radius: 5.3px,
+  $button-background: #1D60F8,
+  $button-color: white,
 );
 
-// Importar los estilos principales de Vuetify
-@import 'vuetify/styles';
-
-// Clase para el botón de iniciar sesión
-.btn-login {
-  border-radius: 5.3px;     // Esquinas redondeadas
-  background-color: #1D60F8;  // Fondo azul
-  color: white;  // Texto blanco
+a {
+  color: #1D60F8 !important;
+  text-decoration: underline;
+  text-decoration-color: #1D60F8;
 }
 
-//Clase para el boton de registrarse
-.btn-signup{
-    border-radius: 5.3px;     // Esquinas redondeadas
-    background-color: #1D60F8;  // Fondo azul
-    color: white;  // Texto blanco
+.v-text-field .v-input__control {
+  background-color: white !important;
+  // border: 1px solid #DDE1E9 !important;
+  // border-radius: 5px !important;
 }
+
