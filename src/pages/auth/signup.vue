@@ -1,18 +1,43 @@
 <script setup>
     import { ref } from 'vue';
-
+    import {Country} from 'country-state-city';
+    import { useRouter } from 'vue-router';
+    
     const nombre = ref('')
     const apellido = ref('')
     const nacionalidad = ref('')
-    const aceptaTerminos = ref(false)
+    const nacionalidades = ref([]);
+    const aceptaTerminos = ref(false);
+    const router = useRouter()
+    const getCountries = () => {
+        const countries = Country.getAllCountries(); 
+        nacionalidades.value = countries.map(country => country.name); 
+    };
 
+    onMounted(() => {
+        getCountries();
+    });
     const submitForm = () => {
-    if (aceptaTerminos.value) {
-        // Handle form submission
-        console.log('Form submitted:', { nombre: nombre.value, apellido: apellido.value, nacionalidad: nacionalidad.value })
-    } else {
-        alert('Debes aceptar los términos y condiciones.')
-    }
+        if (aceptaTerminos.value && nombre.value != ''  && apellido.value != '' && nacionalidad.value != '') {
+
+            // Handle form submission
+            console.log('Form submitted:', { nombre: nombre.value, apellido: apellido.value, nacionalidad: nacionalidad.value })
+        }
+        else if (nombre.value == '')
+        {
+            alert('Falta completar tu Nombre')
+        }
+        else if (apellido.value == '')
+        {
+            alert('Falta completar tu Apellido')
+        }
+        else if ( nacionalidad.value == '')
+        {
+            alert('Falta completar tu Nacionalidad')
+        }
+        else {
+            alert('Debes aceptar los términos y condiciones.')
+        }
     }
 
     const cancelForm = () => {
@@ -21,6 +46,8 @@
         apellido.value = ''
         nacionalidad.value = ''
         aceptaTerminos.value = false
+
+        router.push('/auth/signin')
     }
 </script>
 
@@ -42,13 +69,10 @@
                 outlined
                 required
               ></v-text-field>
-              <v-text-field
-                label="Nacionalidad"
-                v-model="nacionalidad"
-                placeholder="Nacionalidad"
-                outlined
-                required
-              ></v-text-field>
+              <v-combobox
+              label="Nacionalidad"
+              :items=nacionalidades
+              ></v-combobox>
 
               <!-- Terms and Conditions Checkbox -->
               <v-checkbox

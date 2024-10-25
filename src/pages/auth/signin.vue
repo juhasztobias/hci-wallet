@@ -33,11 +33,7 @@ const recoverPassword = () => {
 </script>
 
 <template>
-  <!-- <div class="background">
-    <v-card class="login-card">
-      <div class="logo-container">
-        <img class="logo" src="@/assets/logo.png" alt="Logo" />
-      </div> -->
+
       <v-form @submit.prevent="handleSubmit">
         <v-text-field
           label="Email"
