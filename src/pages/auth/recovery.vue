@@ -12,9 +12,17 @@
     },
     methods: {
         handleRecoveryMethod(method) {
-        console.log("Selected recovery method:", method);
-        //Call API
-        this.$router.push('/auth/recoveryCode'); 
+            console.log("Selected recovery method:", method); // Verificación
+            // Asegúrate de que el método no esté vacío o undefined
+            if (method) {
+                // Enviar método de recuperación seleccionado como parámetro
+                this.$router.push({
+                    path: '/auth/recoveryCode',
+                    query: { method: method } // Enviando el método seleccionado a la siguiente página
+                });
+            } else {
+                console.error("No se seleccionó un método de recuperación");
+            }
         },
         cancelForm() {
             this.$router.push('/auth/signin'); 
@@ -26,15 +34,16 @@
 
 
 <template>
-    <v-container class="flex justify-center items-center min-h-screen bg-blue-900">
+    <v-container>
         <!-- Header -->
         <div class="tw-text-2xl tw-text-primary-600 tw-font-semibold tw-text-left">
           Restablecer contraseña
         </div>
+        <div class="tw-h-2 tw-bg-primary-200 tw-w-[10vw] tw-my-2"/>
         <div class="tw-text-xl tw-text-primary-600 tw-font-light tw-text-left">
           Selecciona un método de recuperación
         </div>
-  
+
         <!-- Recovery Options -->
         <v-list class="mt-6">
           <v-list-item v-for="(method, index) in recoveryMethods" :key="index">
@@ -57,9 +66,9 @@
                 <v-icon>mdi-arrow-left</v-icon>
                 Cancelar
             </v-btn>
-</div>
+        </div>
     </v-container>
-  </template>
+</template>
 <route lang="yaml">
 meta:
     layout: auth.layout
