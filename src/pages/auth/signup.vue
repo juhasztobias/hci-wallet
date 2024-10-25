@@ -70,9 +70,12 @@
                 required
               ></v-text-field>
               <v-combobox
-              label="Nacionalidad"
-              :items=nacionalidades
-              ></v-combobox>
+                label="Nacionalidad"
+                v-model="nacionalidad" 
+                :items="nacionalidades"
+                outlined
+                required
+            ></v-combobox>
 
               <!-- Terms and Conditions Checkbox -->
               <v-checkbox
