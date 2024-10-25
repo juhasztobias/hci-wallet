@@ -29,6 +29,7 @@ const loginWithFacebook = () => {
 
 const recoverPassword = () => {
   console.log('Redirigiendo a recuperación de contraseña');
+  router.push('/auth/recovery');
 };
 </script>
 
@@ -59,7 +60,7 @@ const recoverPassword = () => {
           ¿Olvidaste tu contraseña? Recupérala
         </v-btn>
 
-        <div class="divider">o</div>
+        <div class="tw-text-center">o</div>
 
         <v-btn color="primary" class="register-btn mt-4" block @click="register">
           Crear cuenta
@@ -96,74 +97,6 @@ const recoverPassword = () => {
   </div> -->
 </template>
 
-<style scoped>
-.background {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background: linear-gradient(135deg, #001f3f, #0070c0);
-}
-
-.login-card {
-  width: 400px;
-  padding: 30px;
-  border-radius: 10px;
-  background-color: white;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
-
-.logo-container {
-  display: flex;
-  justify-content: center;
-}
-
-.logo {
-  width: 120px;
-  height: auto;
-  margin-bottom: 30px;
-}
-
-.submit-btn {
-  background-color: #007bff !important;
-  color: white;
-}
-
-.forgot-password-btn {
-  margin-top: 10px;
-  color: #007bff;
-  font-size: 0.9rem;
-}
-
-.divider {
-  margin: 30px 0;
-  text-align: center;
-  color: #999;
-}
-
-.google-btn,
-.apple-btn,
-.facebook-btn,
-.register-btn {
-  margin-top: 15px;
-}
-
-.google-btn {
-  background-color: #db4437;
-  color: white;
-}
-
-.apple-btn {
-  background-color: #333;
-  color: white;
-}
-
-.facebook-btn {
-  background-color: #4267b2;
-  color: white;
-}
-</style>
 
 <route lang="yaml">
 meta:
