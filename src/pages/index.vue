@@ -1,5 +1,5 @@
 <template>
-  <v-btn class="btn-login">Registrarse</v-btn>
+  <v-btn >Registrarse</v-btn>
 </template>
 
 <script setup>
