@@ -23,4 +23,11 @@ export default createVuetify({
       },
     },
   },
+  defaults: {
+    VTextField: {
+      variant: 'outlined',
+      labelPlacement: 'outside',
+      
+    }
+  }
 })

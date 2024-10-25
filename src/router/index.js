@@ -5,9 +5,10 @@
  */
 
 // Composables
-import { createRouter, createWebHistory } from 'vue-router/auto'
-import { setupLayouts } from 'virtual:generated-layouts'
-import { routes } from 'vue-router/auto-routes'
+import { useAuthStore } from '@/stores/auth-store';
+import { setupLayouts } from 'virtual:generated-layouts';
+import { createRouter, createWebHistory } from 'vue-router/auto';
+import { routes } from 'vue-router/auto-routes';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -31,6 +32,28 @@ router.onError((err, to) => {
 
 router.isReady().then(() => {
   localStorage.removeItem('vuetify:dynamic-reload')
+})
+
+router.beforeEach((to, from, next) => {
+  const authStore = useAuthStore();
+
+  if(!authStore.isLoggedIn && to.meta.requiresAuth) {
+    next('/auth/signin');
+    return;
+  }
+
+  const authPaths = [
+    '/auth/signin', 
+    '/auth/signup', 
+    '/auth/forgot-password', 
+    '/auth/reset-password'
+  ];
+  if(authStore.isLoggedIn && authPaths.includes(to.path)) {
+    next('/dashboard');
+    return;
+  }
+
+  next();
 })
 
 export default router

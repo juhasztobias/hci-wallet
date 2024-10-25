@@ -27,7 +27,7 @@
     const name = import.meta.env.VITE_APP_NAME
 </script>
 <template>
-    <div class="tw-flex tw-flex-col tw-bg-primary-500 tw-text-primary-900 tw-rounded-md tw-p-4 tw-py-4 tw-min-h-[calc(100vh-2rem)]"> 
+    <div class="tw-flex tw-flex-col tw-bg-primary-500 tw-text-primary-900 tw-rounded-md tw-p-4 tw-py-4 tw-min-h-[calc(100vh-1rem)]"> 
         <SidebarUser />
         
         <ul class="tw-flex tw-flex-col tw-gap-2 tw-flex-1 tw-py-10">
