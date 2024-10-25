@@ -6,11 +6,12 @@
     const isActive = ref(false);
     const route = useRoute();
 
+    console.log(route.path, item.to);
     watch(() => route.path, () => {
         isActive.value = route.path === item.to;
     })
-
 </script>
+
 <template>
     <router-link :to="item.to">
         <div 
