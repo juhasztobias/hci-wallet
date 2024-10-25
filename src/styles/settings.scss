@@ -10,6 +10,7 @@
   $color-pack: false,
   $card-elevation: 1,
   $border-radius-root: .5rem, 
+  $button-text-transform: none
 );
 
 @each $elevation, $shadow in (

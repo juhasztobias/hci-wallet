@@ -24,6 +24,9 @@
               width: '100%',
               type: 'area',
               toolbar: "none",
+              zoom: {
+                enabled: false
+              }
             },
             dataLabels: {
               enabled: false
@@ -33,6 +36,14 @@
             },
             stroke: {
               curve: 'smooth'
+            },
+            fill: {
+              type: 'gradient',
+              gradient: {
+                shadeIntensity: .2,
+                opacityFrom: .4,
+                opacityTo: .05,
+              }
             },
             xaxis: {
               type: 'string',

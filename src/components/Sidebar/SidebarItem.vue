@@ -1,15 +1,11 @@
 <script setup>
     import { useRoute } from 'vue-router'
-    import { ref, watch } from 'vue'
+    import { computed } from 'vue'
 
     const { item } = defineProps(['item'])
-    const isActive = ref(false);
     const route = useRoute();
+    const isActive = computed(() => route.path === item.to);
 
-    console.log(route.path, item.to);
-    watch(() => route.path, () => {
-        isActive.value = route.path === item.to;
-    })
 </script>
 
 <template>
@@ -20,7 +16,7 @@
             tw-gap-2 tw-transition-all tw-duration-200 tw-ease-in-out"
 
             :class="{
-                'tw-bg-primary-400': isActive,
+                'tw-bg-primary-400': isActive.value,
             }"
         >
             <!-- Example icon -->

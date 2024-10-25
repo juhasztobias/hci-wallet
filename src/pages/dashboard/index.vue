@@ -26,12 +26,15 @@
     }
     const revenue_data = [
         {
-            name: '2022',
-            data: randomRevenueData()
+            name: 'Semana pasada',
+            data: randomRevenueData(),
+            color: '#777', // Muy buenas a todos, guapisimos!
+            type: 'line'
         },
         {
-            name: '2023',
-            data: randomRevenueData()
+            name: 'Esta semana',
+            data: randomRevenueData(),
+            color: '#1D60F8'
         }
     ]
 </script>
