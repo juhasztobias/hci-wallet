@@ -67,7 +67,9 @@ export default {
         
         <div class="tw-flex tw-flex-col tw-items-center">
             <div>
-                <p class="tw-text-h6 tw-ml-[.5rem] tw-mt-10 tw-font-semibold tw-text-primary-600 ">Código de Verificación</p>
+                <p class="tw-text-h6 tw-ml-[.5rem] tw-mt-10 tw-font-semibold tw-text-primary-600 ">
+                    Código de Verificación
+                </p>
                 <v-otp-input v-model="recoveryCode" focus-all autofocus/>
             </div>
         </div>
