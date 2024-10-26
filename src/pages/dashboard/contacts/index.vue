@@ -47,11 +47,18 @@
                                         <div class="tw-flex tw-gap-1 tw-items-center tw-p-2">
                                             <v-icon color="red" small>mdi-heart</v-icon>
                                             <v-icon small>mdi-dots-vertical</v-icon>
+                                            <v-btn
+                                                prepend-icon="mdi-swap-horizontal"
+                                                color="primary"
+                                                variant="tonal"
+                                            >
+                                                Transferir
+                                            </v-btn>
                                         </div>
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="tw-flex tw-gap-1 tw-justify-end">
+                                    <div class="tw-flex tw-gap-1 tw-justify-end tw-items-center">
                                         <v-btn
                                             small
                                             @click="editContact(item)"
