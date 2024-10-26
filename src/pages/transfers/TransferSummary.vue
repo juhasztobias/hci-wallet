@@ -8,7 +8,7 @@
         voucherNumber="voucherNumber"
       />
   
-      <!-- Detalles de la transferencia -->
+ 
       <TransferDetails
         senderName="senderName"
         senderAlias="senderAlias"
@@ -16,15 +16,21 @@
         receiverAlias="receiverAlias"
       />
   
-      <!-- Botones de acción -->
+
       <div class="action-buttons">
-        <v-btn icon @click="saveContact">
-          <v-icon>mdi-account-plus</v-icon>
+        <v-btn 
+            variant="plain"
+            color="grey-lighten-3"
+            size="large"
+        >
+            Guardar Contacto
         </v-btn>
-        <span class="save-contact-label">Guardar contacto</span>
-        <v-btn color="primary" class="confirm-btn" @click="confirmTransfer">
+        <v-btn 
+            color="primary" 
+            class="confirm-btn" 
+            size="large"
+            @click="confirmTransfer">
           Confirmar
-          <v-icon right>mdi-check</v-icon>
         </v-btn>
       </div>
     </v-container>
@@ -94,20 +100,23 @@
     min-width: 210vh;
   }
     .content-wrapper {
-    max-width: 600px; /* Ancho máximo para el contenido */
+    max-width: 600px; 
     width: 100%;
     padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
     }
+    .v-btn--size-large {
+        padding: 0 100px !important
+    }
   
     .action-buttons {
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 15px;
-        margin-top: 20px;
+        gap: 1px;
+        margin-top: 100px;
     }
 
   </style>
