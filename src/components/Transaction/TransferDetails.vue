@@ -1,5 +1,5 @@
   
-<script>
+  <script>
   export default {
     name: 'TransferDetails',
     props: {
@@ -21,8 +21,7 @@
       }
     }
   }
-</script>
-
+  </script>
 <template>
     <div class="transfer-details-card">
       <div class="header">
@@ -40,7 +39,8 @@
         </div>
       </div>
     </div>
-</template>
+  </template>
+
 
 <style scoped>
 .transfer-details-card {
@@ -55,7 +55,7 @@
 .header {
   background-color: #6c757d;
   color: white;
-  padding: 12px 16px;
+  padding: 16px 16px;
   font-weight: bold;
 }
 
@@ -63,7 +63,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px;
+  padding: 24px;
 }
 
 .user-info {
