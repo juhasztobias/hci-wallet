@@ -1,15 +1,11 @@
 <script>
 import TransferDetails from '@/components/Transaction/TransferDetails.vue';
+import TransferError from '@/components/Transaction/TransferError.vue';
 
 
 </script>
 <template>
     <v-card>
-        <TransferDetails 
-      senderName="Tobías Juhasz" 
-      senderAlias="sol.cielo.arcoiris"
-      receiverName="Damián Villablanca" 
-      receiverAlias="sol.cielo.arcoiris"
-    />
+        <TransferError/>
     </v-card>
 </template>
