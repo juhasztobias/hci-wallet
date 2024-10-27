@@ -1,25 +1,25 @@
 import { DummyClient } from "@/dummies/client";
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { computed, ref } from "vue";
+import { useRouter } from "vue-router";
 
 const client = new DummyClient();
 
 export const useAuthStore = defineStore("auth", () => {
-    const token = ref(client.auth.currentToken);
-    const isLoggedIn = ref(token.value !== null);
-    const errors = ref([])
+    let token = ref(client.auth.currentToken);
+    let isLoggedIn = computed(() => Boolean(token.value));
+    let errors = ref([])
 
+    const router = useRouter();
     return {
         token,
         isLoggedIn,
         errors,
         login: async (email, password) => {
             try {
-                const token = await client.auth.signIn(email, password);
-                token.value = token;
-                isLoggedIn.value = true;
-
-                localStorage.setItem('token_store', JSON.parse(token));
+                token.value = await client.auth.signIn(email, password);
+                localStorage.setItem('token_store', JSON.parse(token.value));
+                router.push('/dashboard');
             } catch (error) {
                 errors.value.push(error);
                 console.log(error);
@@ -29,8 +29,9 @@ export const useAuthStore = defineStore("auth", () => {
             try {
                 await client.auth.signOut();
                 token.value = null;
-                isLoggedIn.value = false;
+                // isLoggedIn.value = false;
                 localStorage.removeItem('token_store');
+                router.push('/auth/signin');
             } catch (error) {
                 errors.value.push(error);
             }
@@ -53,10 +54,11 @@ export const useAuthStore = defineStore("auth", () => {
                 errors.value.push(error);
             }
         },
-        forgotPassword: async (email, method) => {
+        forgotPassword: async (email) => {
             try {
-                await client.auth.forgotPassword(email, method);
+                await client.auth.forgotPassword(email, 'email');
             } catch (error) {
+                console.log(error);
                 errors.value.push(error);
             }
         },

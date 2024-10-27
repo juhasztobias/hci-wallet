@@ -1,3 +1,4 @@
+import { Sendgrid } from "@/dummies/sendgrid";
 import { User } from "../user";
 import { AuthError } from "./error/auth.error";
 
@@ -48,11 +49,13 @@ export class DummyAuth {
      */
     signOut = () => new Promise((resolve, reject) => {
             if(!this.currentAccount) reject(new AuthError('User is not signed in'));
-            this.currentToken = null;
-            setTimeout(() => {
-                resolve();
-            }, 2000);
-        });
+        this.currentToken = null;
+        localStorage.removeItem('session_token');
+        setTimeout(() => {
+            resolve();
+        }, 2000);
+    });
+           
 
     /**
      * Signs up a new user with the given email and password
@@ -107,7 +110,12 @@ export class DummyAuth {
         const token = await this.createResetToken(email);
         switch (method) {
             case 'email':
-                // TODO: Send email with forgot password link
+                const sendgrid = new Sendgrid();
+                await sendgrid.sendEmail(email,
+                    'Recuperación de contraseña',
+                    'Código para recuperar la contraseña',
+                    `Código: ${token}`
+                );
                 break;
             case 'sms':
                 if (!user.phone) reject(new AuthError('The account does not have a phone number'));
