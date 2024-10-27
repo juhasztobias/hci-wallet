@@ -1,20 +1,20 @@
-import sgMail from '@sendgrid/mail';
+import emailjs from '@emailjs/browser';
 
-sgMail.setApiKey(import.meta.env.VITE_SENDGRID_API_KEY);
 
-export class Sendgrid {
-    constructor() {
-        this.sgMail = sgMail;
-    }
+emailjs.init({
+    publicKey: import.meta.env.VITE_PUBLIC_EMAIL,
+});
 
-    sendEmail = async (to, subject, text, html) => {
-        const msg = {
-            to,
-            from: 'tjuhasz@ita.edu.ar',
-            subject,
-            text,
-            html,
-        };
-        return await this.sgMail.send(msg);
+export class EmailSender {
+    constructor() {}
+
+    send = async (to, message) => {
+        return await emailjs.send("service_pdqdi9v", "template_9kcq2nb",{
+            message,
+            "to_name": to.name,
+            "to_email": to.email,
+            "reply_to": 'do-not-reply@pagozen.com',
+            "subject": 'Pagozen - Recuperación de contraseña',
+        }); 
     }
 }

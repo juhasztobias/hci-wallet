@@ -1,9 +1,11 @@
 <script setup>
 import { useAuthStore } from '@/stores/auth-store';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 const email = ref('');
 const password = ref('');
 
+const router = useRouter();
 
 const handleSubmit = () => {
   console.log('Iniciar sesión con:', email.value, password.value)
@@ -12,6 +14,11 @@ const handleSubmit = () => {
     password.value
   );
 }
+
+const forgotPassword = () => {
+  router.push('/auth/forgot-password');
+}
+
 </script>
 
 <template>
@@ -26,7 +33,7 @@ const handleSubmit = () => {
       Iniciar sesión
     </v-btn>
 
-    <v-btn variant="text" text class="forgot-password-btn">
+    <v-btn variant="text" text class="forgot-password-btn" @click="forgotPassword">
       ¿Olvidaste tu contraseña? Recupérala
     </v-btn>
 

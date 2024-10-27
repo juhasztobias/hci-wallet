@@ -1,9 +1,10 @@
-import { Sendgrid } from "@/dummies/sendgrid";
+import { EmailSender } from "@/dummies/sendgrid";
 import { User } from "../user";
 import { AuthError } from "./error/auth.error";
 
 const usersDict = {
-    'juan@gmail.com':   new User('juan@gmail.com', '123456', 'Juan', 'Perez', '+56 789012345', 'ES'),
+    'juan@gmail.com': new User('juan@gmail.com', '123456', 'Juan', 'Perez', '+56 789012345', 'ES'),
+    'tobiasjuhasz@gmail.com': new User('tobiasjuhasz@gmail.com', '123456', 'Tobias', 'Juhasz', '+56 987654321', 'ES'),
     'maria@gmail.com':  new User('maria@gmail.com', '123456', 'Maria', 'Rodriguez', '+56 987654321', 'ES'),
 }
 
@@ -108,13 +109,16 @@ export class DummyAuth {
      */
     forgotPassword = async (email, method) => {
         const token = await this.createResetToken(email);
+        const accountName = usersDict[email].name;
         switch (method) {
             case 'email':
-                const sendgrid = new Sendgrid();
-                await sendgrid.sendEmail(email,
-                    'Recuperación de contraseña',
-                    'Código para recuperar la contraseña',
-                    `Código: ${token}`
+                const emailSender = new EmailSender();
+                await emailSender.send(
+                    {
+                        name: accountName,
+                        email: email,
+                    },
+                    token
                 );
                 break;
             case 'sms':
