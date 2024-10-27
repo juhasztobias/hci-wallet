@@ -51,6 +51,7 @@
                                                 prepend-icon="mdi-swap-horizontal"
                                                 color="primary"
                                                 variant="tonal"
+                                                @click="transferContact(item)"
                                             >
                                                 Transferir
                                             </v-btn>
@@ -119,6 +120,18 @@
 
 <script setup>
     import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+    const router = useRouter();
+
+    const transferContact = (contact) => {
+        router.push({
+            "path": '/dashboard/transfer',
+            "query": {
+                "_to": contact.uid
+            }
+        });
+    }
+
     const currentFilter = ref('all');
     const filters = [
         { text: 'Todos', value: 'all' },
@@ -129,11 +142,12 @@
     const headers = []
 
     const contacts = [
-        { name: 'Juan', lastName: 'Perez', email: 'juan@gmail.com' },
-        { name: 'Maria', lastName: 'Rodriguez', email: 'maria@gmail.com' },
-        { name: 'Pedro', lastName: 'Lopez', email: 'pedro@gmail.com' },
-        { name: 'Luis', lastName: 'Garcia', email: 'luis@gmail.com' },
-        { name: 'Carlos', lastName: 'Hernandez', email: 'carlos@gmail.com' },
+        { uid: "abc123",name: 'Juan', lastName: 'Perez', email: 'juan@gmail.com' },
+        { uid: "abc124",name: 'Maria', lastName: 'Rodriguez', email: 'maria@gmail.com' },
+        { uid: "abc125",name: 'Pedro', lastName: 'Lopez', email: 'pedro@gmail.com' },
+        { uid: "abc126",name: 'Luis', lastName: 'Garcia', email: 'luis@gmail.com' },
+        { uid: "abc127",name: 'Carlos', lastName: 'Hernandez', email: 'carlos@gmail.com' },
+        { uid: "abc128",name: 'Juan', lastName: 'Gomez', email: 'jgomez@gmail.com' },
     ]
     
     const editContact = (contact) => {
