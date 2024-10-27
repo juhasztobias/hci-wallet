@@ -7,7 +7,7 @@
                 </template>
 
                 <template #content>
-                    <ActivityTable />
+                    <ActivityTable type="recents" />
                 </template>
             </MainCard>
             <div class="tw-flex tw-gap-3 tw-flex-row tw-w-full">

@@ -1,12 +1,13 @@
 <template>
     <v-card class="tw-flex tw-flex-col tw-w-full" elevation="1">
-        <v-card-title class="tw-text-lg tw-font-semibold">
-            Acciones rápidas
-        </v-card-title>
-        <div class="tw-flex-grow">
-            <v-btn color="primary" variant="flat" class="tw-flex-1">
-                Continuar
-            </v-btn>
+        <div class="tw-flex tw-flex-col tw-gap-3 tw-p-2">
+            <CreditCard />
+            <div class="tw-grid tw-grid-cols-4 tw-gap-1">
+                <QuickActionButton title="Ingresar" icon="mdi-cash-multiple" />
+                <QuickActionButton title="Egresar" icon="mdi-cash-minus" />
+                <QuickActionButton title="Enviar" icon="mdi-send" />
+                <QuickActionButton title="Servicios" icon="mdi-account-multiple" />
+            </div>
         </div>
     </v-card>
 </template>
