@@ -33,27 +33,16 @@ const recoverPassword = () => {
       Iniciar sesión
     </v-btn>
 
-        <v-btn variant="text" text class="forgot-password-btn" @click="recoverPassword">
-          ¿Olvidaste tu contraseña? Recupérala
-        </v-btn>
+    <v-btn variant="text" text class="forgot-password-btn" @click="recoverPassword">
+      ¿Olvidaste tu contraseña? Recupérala
+    </v-btn>
 
-        <div class="tw-text-center">o</div>
+    <div class="tw-text-center">o</div>
 
     <v-btn color="primary" class="register-btn mt-4" block>
       Crear cuenta
     </v-btn>
 
-    <!-- <v-btn class="google-btn mt-4" color="red darken-2" prepend-icon="mdi-google" block @click="loginWithGoogle">
-      Iniciar sesión con Google
-    </v-btn>
-
-    <v-btn class="apple-btn mt-4" prepend-icon="mdi-apple" color="black" block @click="loginWithApple">
-      Iniciar sesión con Apple
-    </v-btn>
-
-    <v-btn class="facebook-btn mt-4" prepend-icon="mdi-facebook" color="blue darken-4" block @click="loginWithFacebook">
-      Iniciar sesión con Facebook
-    </v-btn> -->
   </v-form>
   <!-- </v-card>
   </div> -->

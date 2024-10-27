@@ -48,19 +48,23 @@ export const useAuthStore = defineStore("auth", () => {
             }
         },
         isValidResetToken: async (email, token) => {
-            try {
-                return await client.auth.isValidResetToken(email, token);
-            } catch (error) {
-                errors.value.push(error);
+
+            console.log("Validating token for email:", email, "with token:", token);
+            const isValid = client.auth.isValidResetToken(email, token);
+            console.log("Token validity result:", isValid);
+            if (!isValid) {
+                throw new Error('Invalid reset token');
             }
+            return isValid;
+
         },
         forgotPassword: async (email) => {
-            try {
-                await client.auth.forgotPassword(email, 'email');
-            } catch (error) {
-                console.log(error);
-                errors.value.push(error);
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!email || !email.match(emailPattern)) {
+                throw new Error('Invalid email');
             }
+            await client.auth.forgotPassword(email, 'email');
+           
         },
         resetPassword: async (email, token, password) => {
             try {
