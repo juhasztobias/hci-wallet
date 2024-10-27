@@ -16,7 +16,8 @@
             </div>
         </section>
         <aside class="tw-flex tw-gap-3 tw-flex-col">
-            <BillGraph :series_data="series_data" />
+            <QuickActions />
+            <ContactData />
         </aside>
     </main>
 </template>
