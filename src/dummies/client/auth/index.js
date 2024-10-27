@@ -1,4 +1,5 @@
 import { User } from "../user";
+import { AuthError } from "./error/auth.error";
 
 const usersDict = {
     'juan@gmail.com':   new User('juan@gmail.com', '123456', 'Juan', 'Perez', '+56 789012345', 'ES'),
@@ -7,10 +8,14 @@ const usersDict = {
 
 const resetTokens = {}
 export class DummyAuth {
+    constructor() {
+        const token = localStorage.getItem('session_token');
+        if(!token) return;
 
-    currentAccount = null;
-    constructor() { }
-
+        this.currentToken = token;
+        const decoded = JSON.parse(token);
+        this.currentAccount = usersDict[decoded.email];
+    }
 
     /**
      * Sign in with email and password
@@ -27,7 +32,13 @@ export class DummyAuth {
         if (user.password !== password) reject(new AuthError('Invalid email or password'));
 
         this.currentAccount = user;
-        resolve(this.currentAccount);
+        this.currentToken = JSON.stringify({
+            email: user.email,
+            exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7,
+        });
+        
+        localStorage.setItem('session_token', this.currentToken);
+        resolve(this.currentToken);
     });
 
     /**
@@ -37,7 +48,7 @@ export class DummyAuth {
      */
     signOut = () => new Promise((resolve, reject) => {
             if(!this.currentAccount) reject(new AuthError('User is not signed in'));
-            this.currentAccount = null;
+            this.currentToken = null;
             setTimeout(() => {
                 resolve();
             }, 2000);
