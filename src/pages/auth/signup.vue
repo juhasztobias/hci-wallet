@@ -14,6 +14,7 @@ const nacionalidades = ref([]);
 const aceptaTerminos = ref(false);
 const router = useRouter()
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 const getCountries = () => {
   const countries = Country.getAllCountries();
   nacionalidades.value = countries.map(country => country.name);
@@ -36,11 +37,10 @@ const submitForm = () => {
 
     try {
       useAuthStore().register(email.value, password.value, nacionalidad.value)
+      console.log("Going to dashboard")
       router.push('/dashboard')
     }
     catch (err) {
-      console.log("err:", err)
-
       alert("error")
     }
 
