@@ -27,9 +27,7 @@ const items = ref([
 const version = import.meta.env.VITE_APP_VERSION
 const name = import.meta.env.VITE_APP_NAME
 
-const logout = () => {
-    useAuthStore().logout();
-}
+const logout = () => useAuthStore().logout();
 </script>
 <template>
     <div
