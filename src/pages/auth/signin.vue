@@ -4,15 +4,34 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 const email = ref('');
 const password = ref('');
+const error_msg = ref('');
+const show_err = ref(false);
 
 const router = useRouter();
 
 const handleSubmit = () => {
   console.log('Iniciar sesión con:', email.value, password.value)
-  useAuthStore().login(
-    email.value,
-    password.value
-  );
+  try {
+    if (email.value != '' && password.value != '') {
+      useAuthStore().login(
+        email.value,
+        password.value
+      );
+    }
+    else {
+      error_msg.value = 'Debes ingresar un correo electrónico y contraseña';
+      show_err.value = true
+    }
+  }
+  catch (err) {
+    error_msg.value = err.message
+    show_err.value = true
+  }
+
+}
+const handleRegister = () => {
+  console.log('Redirigiendo a Register');
+  router.push('/auth/signup');
 }
 
 const recoverPassword = () => {
@@ -39,13 +58,14 @@ const recoverPassword = () => {
 
     <div class="tw-text-center">o</div>
 
-    <v-btn color="primary" class="register-btn mt-4" block>
+    <v-btn color="primary" @click="handleRegister" class="register-btn mt-4" block>
       Crear cuenta
     </v-btn>
-
+    <v-snackbar v-model="show_err">
+      {{ error_msg }}
+    </v-snackbar>
   </v-form>
-  <!-- </v-card>
-  </div> -->
+
 </template>
 
 
