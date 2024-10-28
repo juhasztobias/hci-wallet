@@ -14,6 +14,10 @@ const handleSubmit = () => {
     password.value
   );
 }
+const handleRegister = () => {
+  console.log('Redirigiendo a Register');
+  router.push('/auth/signup');
+}
 
 const recoverPassword = () => {
   console.log('Redirigiendo a recuperación de contraseña');
@@ -39,7 +43,7 @@ const recoverPassword = () => {
 
     <div class="tw-text-center">o</div>
 
-    <v-btn color="primary" class="register-btn mt-4" block>
+    <v-btn color="primary" @click="handleRegister" class="register-btn mt-4" block>
       Crear cuenta
     </v-btn>
 
