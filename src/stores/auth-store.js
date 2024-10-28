@@ -25,6 +25,7 @@ export const useAuthStore = defineStore("auth", () => {
                 console.log(error);
             }
         },
+        getAccount: () => client.auth.currentAccount,
         logout: async () => {
             try {
                 await client.auth.signOut();

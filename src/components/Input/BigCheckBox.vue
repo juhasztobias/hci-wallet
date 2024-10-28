@@ -23,30 +23,26 @@
     </div>
 </template>
 
-<script>
-import { ref } from 'vue';
+<script setup>
+const props = defineProps({
+    title: {
+        type: String,
+        required: true,
+    },
+    subtitle: {
+        type: String,
+        required: true,
+    },
+    icon: {
+        type: String,
+        required: false,
+    },
+    isSelected: {
+        type: Boolean,
+        required: false,
+    },
+})
 
-// export default {
-//     props: {
-//         title: {
-//             type: String,
-//             required: true,
-//         },
-//         subtitle: {
-//             type: String,
-//             required: true,
-//         },
-//         icon: {
-//             type: String,
-//             required: false,
-//         },
-//         isSelected: {
-//             type: Boolean,
-//             required: false,
-//         },
-//     },
-// };
-const isSelected = ref(false);
-
+const isSelected = ref(props.isSelected ?? false);
 const onSelect = () => isSelected.value = !isSelected.value;
 </script>
