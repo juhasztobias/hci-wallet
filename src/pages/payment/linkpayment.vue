@@ -27,6 +27,7 @@
 import AmountSection from '@/components/AmountSection.vue';
 import DetailsSection from '@/components/DetailsSection.vue';
 
+
 export default {
     name: 'PaymentLinkPage',
     components: {
@@ -42,7 +43,7 @@ export default {
     },
     methods: {
         cancelPayment() {
-            // Logic for canceling payment
+            this.$router.push('/dashboard')
             console.log('Payment canceled');
         },
         payNow() {
