@@ -1,5 +1,5 @@
 <script setup>
 import { useRouter } from 'vue-router';
 const router = useRouter();
-router.push('/signin');
+router.push('/auth/signin/');
 </script>
