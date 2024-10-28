@@ -7,9 +7,11 @@
                         Realizar transferencia
                     </h1>
                 </div>
-                <div class="tw-grid tw-py-4 tw-px-4">
+                <div class="tw-grid tw-py-4 tw-px-4 tw-gap-4">
                     <!-- Monto a transferir, debe figurar el dinero disponible -->
-                    <div></div>
+                    <div class="tw-flex tw-flex-col tw-items-center">
+                        <MoneyInput />
+                    </div>
 
                     <!-- Seleccionar contacto, motivo y detalle -->
                     <div class="tw-grid tw-gap-2 tw-grid-cols-3">
@@ -36,7 +38,7 @@
                     </div>
 
                     <!-- Checkbox seleccionar banco del contacto -->
-                    <div></div>
+                    <BigCheckBox title="Cuenta de Pagozen " :subtitle="alias" isSelected />
 
                     <!-- Boton de enviar -->
                     <div class="tw-flex tw-gap-2 tw-justify-end tw-items-center">
@@ -52,6 +54,12 @@
         </section>
     </main>
 </template>
+
+<script setup>
+
+const alias = 'juan.pagozen.alias';
+</script>
+
 <route lang="yaml">
 meta:
     layout: dashboard.layout
