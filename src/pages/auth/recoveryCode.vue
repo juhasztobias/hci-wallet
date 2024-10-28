@@ -34,7 +34,12 @@ export default {
                 console.log("Is valid:", isValid);
                 if (isValid) {
                     alert('Código de recuperación enviado con éxito.');
-                    this.$router.push('/auth/resetPassword');
+                    this.$router.push({
+                        path: '/auth/resetPassword',
+                        query: { email: this.recoveryEmail, code: this.recoveryCode }
+
+                    });
+
                 }
             } catch (error) {
                 console.error("Error al validar el código de recuperación:", error);

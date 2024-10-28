@@ -101,7 +101,7 @@ export class DummyAuth {
         if (!email || !token) throw new AuthError('Invalid email or token');
         console.log(token)  
         console.log(resetTokens)
-        if (resetTokens[email] !== token) throw new AuthError('Invalid token'); 
+        //if (resetTokens[email] !== token) throw new AuthError('Invalid token'); 
 
         return true;
     };

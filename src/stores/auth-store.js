@@ -67,11 +67,9 @@ export const useAuthStore = defineStore("auth", () => {
            
         },
         resetPassword: async (email, token, password) => {
-            try {
-                await client.auth.resetPassword(email, token, password);
-            } catch (error) {
-                errors.value.push(error);
-            }
+            
+            return await client.auth.resetPassword(email, token, password);
+  
         }
     };
 })
