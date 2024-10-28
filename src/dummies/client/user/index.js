@@ -1,4 +1,5 @@
 import { Contact } from "../contact";
+import { ContactError } from "../contact/error";
 
 const LATENCY_MS = 200;
 
@@ -73,6 +74,21 @@ export class User {
         );
     }
 
+    /**
+     * 
+     * @param {Contact} - Un contacto nuevo
+     * @returns 
+     */
+    addContact = (contact) => {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                if (this.contacts.find(c => c.email === contact.email)) reject(new ContactError('Contact already exists'));
+                this.contacts.push(contact);
+                resolve(contact);
+            }, LATENCY_MS);
+        });
+    }
+    
     /**
      * 
      * @returns {Promise<Contact[]>}

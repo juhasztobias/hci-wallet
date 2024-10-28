@@ -1,4 +1,5 @@
 import { EmailSender } from "@/dummies/sendgrid";
+import { Contact } from "../contact";
 import { User } from "../user";
 import { AuthError } from "./error/auth.error";
 
@@ -7,6 +8,12 @@ const usersDict = {
     'tobiasjuhasz@gmail.com': new User('tobiasjuhasz@gmail.com', '123456', 'Tobias', 'Juhasz', '+56 987654321', 'ES'),
     'maria@gmail.com':  new User('maria@gmail.com', '123456', 'Maria', 'Rodriguez', '+56 987654321', 'ES'),
 }
+
+export const getContactByEmail = (email) => {
+    const user = usersDict[email];
+    if(!user) return null;
+    return new Contact(usersDict[email]);
+};
 
 const resetTokens = {}
 export class DummyAuth {
