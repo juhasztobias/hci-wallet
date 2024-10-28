@@ -47,8 +47,22 @@ export default {
             console.log('Payment canceled');
         },
         payNow() {
-            // Logic for processing payment
             console.log('Processing payment');
+            this.$router.push({
+                path: '/transfers/TransferSummary',
+                params: {
+                    amount: "100",
+                    // Add other parameters as needed
+                    receiverName: "Receiver Name",
+                    bankName: "Bank Name",
+                    voucherNumber: "123456",
+                    senderName: "Sender Name",
+                    senderAlias: "Sender Alias",
+                    receiverAlias: "Receiver Alias",
+                }
+            });
+
+
         }
     }
 };
