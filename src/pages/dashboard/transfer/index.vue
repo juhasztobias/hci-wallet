@@ -10,7 +10,7 @@
                 <div class="tw-grid tw-py-4 tw-px-4 tw-gap-4">
                     <!-- Monto a transferir, debe figurar el dinero disponible -->
                     <div class="tw-flex tw-flex-col tw-items-center">
-                        <MoneyInput />
+                        <MoneyInput v-model="transferAmount" />
                     </div>
 
                     <!-- Seleccionar contacto, motivo y detalle -->
@@ -42,10 +42,10 @@
 
                     <!-- Boton de enviar -->
                     <div class="tw-flex tw-gap-2 tw-justify-end tw-items-center">
-                        <v-btn color="neutral" variant="text" class="tw-flex-1">
+                        <v-btn color="neutral" variant="text" @click="cancel" class="tw-flex-1">
                             Cancelar
                         </v-btn>
-                        <v-btn color="primary" variant="flat" class="tw-flex-1">
+                        <v-btn color="primary" variant="flat" @click="continueTransfer" class="tw-flex-1">
                             Continuar
                         </v-btn>
                     </div>
@@ -56,12 +56,45 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 const alias = 'juan.pagozen.alias';
+const transferAmount = ref(0); // Ensure this is defined
+const selectedContact = ref(null);
+const selectedReason = ref(null);
+const selectedDetail = ref('');
+const selectedType = ref(null);
+const contacts = []; // Populate with actual contacts
+const reasons = []; // Populate with actual reasons
+const banks = []; // Populate with actual bank types
+const router = useRouter();
+
+const cancel = () => {
+    router.go(-1); // Go back to the previous page
+};
+
+const continueTransfer = () => {
+    console.log(transferAmount.value)
+    if (transferAmount.value <= 0) {
+        alert("Por favor ingrese un monto positivo para transferir");
+        return;
+    }
+
+    if (transferAmount.value <= 100) {
+        // Show an alert or error message
+        alert("El monto debe ser mayor a 100");
+        return;
+    }
+
+    // Si el monto es mayor a 100, continuar con la lógica de transferencia
+    console.log('Realizando la transferencia...');
+    router.push('/transfers/TransferSummary');
+};
+
 </script>
 
 <route lang="yaml">
 meta:
-    layout: dashboard.layout
-    requiresAuth: true
+    layout: default
 </route>

@@ -5,7 +5,7 @@
 
         </div>
         <span class="tw-flex-1">
-            Hola, {{ authStore.getAccount().name }}
+            Hola, {{ authStore.getAccount()?.name }}
         </span>
         <v-icon icon="mdi-chevron-right" />
     </div>

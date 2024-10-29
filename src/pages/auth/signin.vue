@@ -4,21 +4,40 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 const email = ref('');
 const password = ref('');
+const error_msg = ref('');
+const show_err = ref(false);
 
 const router = useRouter();
 
 const handleSubmit = () => {
   console.log('Iniciar sesión con:', email.value, password.value)
-  useAuthStore().login(
-    email.value,
-    password.value
-  );
+  try {
+    if (email.value != '' && password.value != '') {
+      useAuthStore().login(
+        email.value,
+        password.value
+      );
+    }
+    else {
+      error_msg.value = 'Debes ingresar un correo electrónico y contraseña';
+      show_err.value = true
+    }
+  }
+  catch (err) {
+    error_msg.value = err.message
+    show_err.value = true
+  }
+
+}
+const handleRegister = () => {
+  console.log('Redirigiendo a Register');
+  router.push('/auth/signup');
 }
 
-const forgotPassword = () => {
-  router.push('/auth/forgot-password');
-}
-
+const recoverPassword = () => {
+  console.log('Redirigiendo a recuperación de contraseña');
+  router.push('/auth/recovery');
+};
 </script>
 
 <template>
@@ -33,100 +52,22 @@ const forgotPassword = () => {
       Iniciar sesión
     </v-btn>
 
-    <v-btn variant="text" text class="forgot-password-btn" @click="forgotPassword">
+    <v-btn variant="text" text class="forgot-password-btn" @click="recoverPassword">
       ¿Olvidaste tu contraseña? Recupérala
     </v-btn>
 
-    <div class="divider">o</div>
+    <div class="tw-text-center">o</div>
 
-    <v-btn color="primary" class="register-btn mt-4" block>
+    <v-btn color="primary" @click="handleRegister" class="register-btn mt-4" block>
       Crear cuenta
     </v-btn>
-
-    <!-- <v-btn class="google-btn mt-4" color="red darken-2" prepend-icon="mdi-google" block @click="loginWithGoogle">
-      Iniciar sesión con Google
-    </v-btn>
-
-    <v-btn class="apple-btn mt-4" prepend-icon="mdi-apple" color="black" block @click="loginWithApple">
-      Iniciar sesión con Apple
-    </v-btn>
-
-    <v-btn class="facebook-btn mt-4" prepend-icon="mdi-facebook" color="blue darken-4" block @click="loginWithFacebook">
-      Iniciar sesión con Facebook
-    </v-btn> -->
+    <v-snackbar v-model="show_err">
+      {{ error_msg }}
+    </v-snackbar>
   </v-form>
-  <!-- </v-card>
-  </div> -->
+
 </template>
 
-<style scoped>
-.background {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background: linear-gradient(135deg, #001f3f, #0070c0);
-}
-
-.login-card {
-  width: 400px;
-  padding: 30px;
-  border-radius: 10px;
-  background-color: white;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
-
-.logo-container {
-  display: flex;
-  justify-content: center;
-}
-
-.logo {
-  width: 120px;
-  height: auto;
-  margin-bottom: 30px;
-}
-
-.submit-btn {
-  background-color: #007bff !important;
-  color: white;
-}
-
-.forgot-password-btn {
-  margin-top: 10px;
-  color: #007bff;
-  font-size: 0.9rem;
-}
-
-.divider {
-  margin: 30px 0;
-  text-align: center;
-  color: #999;
-}
-
-.google-btn,
-.apple-btn,
-.facebook-btn,
-.register-btn {
-  margin-top: 15px;
-}
-
-.google-btn {
-  background-color: #db4437;
-  color: white;
-}
-
-.apple-btn {
-  background-color: #333;
-  color: white;
-}
-
-.facebook-btn {
-  background-color: #4267b2;
-  color: white;
-}
-</style>
 
 <route lang="yaml">
 meta:

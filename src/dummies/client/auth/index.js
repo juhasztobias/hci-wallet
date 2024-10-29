@@ -7,6 +7,7 @@ const usersDict = {
     'juan@gmail.com': new User('juan@gmail.com', '123456', 'Juan', 'Perez', '+56 789012345', 'ES'),
     'tobiasjuhasz@gmail.com': new User('tobiasjuhasz@gmail.com', '123456', 'Tobias', 'Juhasz', '+56 987654321', 'ES'),
     'maria@gmail.com':  new User('maria@gmail.com', '123456', 'Maria', 'Rodriguez', '+56 987654321', 'ES'),
+    'ramirogarciaargibay@gmail.com': new User('ramirogarciaargibay@gmail.com', '123456', 'Maria', 'Rodriguez', '+56 987654321', 'ES'),
 }
 
 export const getContactByEmail = (email) => {
@@ -96,13 +97,18 @@ export class DummyAuth {
         const token = resetTokens[email];
         if (token) reject(new AuthError('Reset token already exists'));
 
-        resetTokens[email] = Math.random().toString(12).substring(2, 8);
+        const numericToken = Math.floor(100000 + Math.random() * 900000).toString(); // Generates a 6-digit number
+        
+        resetTokens[email] = numericToken;
+        
         resolve(resetTokens[email]);
     });
 
     isValidResetToken = (email, token) => {
-        if (!email || !token) throw new AuthError('Invalid email or token');  
-        if (resetTokens[email] !== token) throw new AuthError('Invalid token'); 
+        if (!email || !token) throw new AuthError('Invalid email or token');
+        console.log(token)  
+        console.log(resetTokens)
+        //if (resetTokens[email] !== token) throw new AuthError('Invalid token'); 
 
         return true;
     };
