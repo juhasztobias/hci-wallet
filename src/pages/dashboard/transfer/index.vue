@@ -15,14 +15,9 @@
 
                     <!-- Seleccionar contacto, motivo y detalle -->
                     <div class="tw-grid tw-gap-2 tw-grid-cols-3">
-                        <v-select v-model="selectedContact" :items="contacts" label="Seleccionar contacto"
-                            density="comfortable" variant="outlined" color="primary"
-                            prepend-inner-icon="mdi-account-multiple" clearable>
-                            <template v-slot:item="{ item }">
-                                <v-list-item-title>{{ item.name }} {{ item.lastName }}</v-list-item-title>
-                                <v-list-item-subtitle>{{ item.email }}</v-list-item-subtitle>
-                            </template>
-                        </v-select>
+                        <v-select v-model="_to" :items="contacts" label="Seleccionar contacto" density="comfortable"
+                            variant="outlined" color="primary" prepend-inner-icon="mdi-account-multiple" clearable
+                            item-title="fullName" :item-value="email"></v-select>
 
                         <v-select v-model="selectedReason" :items="reasons" label="Motivo" density="comfortable"
                             variant="outlined" color="primary" prepend-inner-icon="mdi-alert-circle-outline"
@@ -31,8 +26,8 @@
                         <v-text-field v-model="selectedDetail" label="Detalle" density="comfortable" variant="outlined"
                             color="primary" />
 
-                        <v-select v-model="selectedType" :items="banks" label="Tipo de transferencia"
-                            density="comfortable" variant="outlined" color="primary"
+                        <v-select v-model="type" :items="types" label="Tipo de transferencia" density="comfortable"
+                            variant="outlined" color="primary"
                             :class="selectedBank === 'Programada' ? 'tw-col-span-2' : 'tw-col-span-2'" />
                         <DateInput />
                     </div>
@@ -91,10 +86,43 @@ const continueTransfer = () => {
     console.log('Realizando la transferencia...');
     router.push('/transfers/TransferSummary');
 };
+</script>
+
+<script>
+import { useAuthStore } from '@/stores/auth-store';
+const authStore = useAuthStore();
+const currentUser = authStore.getAccount();
+const contacts = currentUser.contacts.map((contact) => {
+    return {
+        fullName: contact.name + ' ' + contact.lastName,
+        email: contact.email
+    }
+});
+const types = [
+    'Inmediato',
+    'Programada',
+]
+console.log(contacts);
+// Agarro
+export default {
+    created() {
+        this.$data._to = this.$route.query._to ?? '';
+        this.$data.contacts
+    },
+    data() {
+        return {
+            _to: currentUser.email,
+            contacts,
+            alias: 'juan.pagozen.alias',
+            type: 'Inmediato',
+            types
+        }
+    },
+}
 
 </script>
 
 <route lang="yaml">
 meta:
-    layout: default
+    layout: dashboard.layout
 </route>

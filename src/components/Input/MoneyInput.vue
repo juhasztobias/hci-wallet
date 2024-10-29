@@ -1,28 +1,29 @@
 <template>
-    <div class="flex flex-col items-center">
+    <div class="tw-flex tw-flex-col tw-items-center tw-text-primary-500">
         <!-- Etiqueta -->
-        <label class="text-center text-xl font-semibold mb-4 text-gray-800">Ingrese el monto</label>
+        <slot name="prepend"></slot>
+        <!-- <label class="text-center text-xl font-semibold mb-4 text-gray-800">Ingrese el monto</label> -->
 
         <!-- Campo de entrada -->
-        <div class="tw-max-w-72 tw-flex tw-gap-1">
+        <div class="tw-max-w-fit tw-flex tw-gap-1">
             <!-- Signo de dólar -->
-            <span class="tw-text-2xl">$</span>
+            <span class="tw-text-2xl tw-font-bold tw-self-center">$</span>
             <!-- Input para la parte entera -->
-            <span class="tw-outline-none tw-flex-1 tw-px-2 tw-text-4xl tw-text-gray-800" contenteditable="true"
-                @input="onIntegerInput" @keydown="onIntegerKeydown" ref="integerInput" data-placeholder="0"></span>
-
-            <!-- Punto decimal -->
-            <span class="tw-text-2xl tw-text-gray-800">.</span>
-
+            <span
+                class="tw-outline-none tw-font-bold tw-flex-1 tw-px-2 tw-text-4xl tw-text-primary-500 tw-inline-block integer-part"
+                contenteditable="true" @input="onIntegerInput" @keydown="onIntegerKeydown" ref="integerInput"
+                data-placeholder="0"></span>
             <!-- Input para la parte decimal -->
-            <span class="tw-outline-none tw-px-2 tw-text-2xl tw-text-gray-800" contenteditable="true"
-                @input="onDecimalInput" @keydown="onDecimalKeydown" ref="decimalInput" data-placeholder="00"></span>
+            <span class="tw-outline-none tw-font-bold tw-px-2 tw-text-xl tw-text-primary-500 tw-inline-block"
+                contenteditable="true" @input="onDecimalInput" @keydown="onDecimalKeydown" ref="decimalInput"
+                data-placeholder="00"></span>
         </div>
 
         <!-- Texto secundario -->
-        <p class="mt-4 text-gray-600 text-base">
+        <slot name="append"></slot>
+        <!-- <p class="mt-4 text-gray-600 text-base tw-text-primary-300">
             Dinero disponible: <span class="font-semibold">$100</span>
-        </p>
+        </p> -->
     </div>
 </template>
 
@@ -65,12 +66,15 @@ export default {
             if (this.decimalPart.length === 0) {
                 this.$refs.integerInput.focus();
                 this.setCursorToEnd(this.$refs.integerInput);
+                this.setCursorToEnd(this.$refs.integerInput);
             }
         },
         onIntegerKeydown(event) {
             if (event.key === '.' || event.key === ',') {
                 event.preventDefault();
+                event.preventDefault();
                 this.$refs.decimalInput.focus();
+                this.setCursorToEnd(this.$refs.decimalInput);
                 this.setCursorToEnd(this.$refs.decimalInput);
             }
         },
@@ -78,6 +82,7 @@ export default {
             if (event.key === 'Backspace' && this.decimalPart.length === 0) {
                 event.preventDefault();
                 this.$refs.integerInput.focus();
+                this.setCursorToEnd(this.$refs.integerInput);
                 this.setCursorToEnd(this.$refs.integerInput);
             }
         },
@@ -89,6 +94,12 @@ export default {
             sel.removeAllRanges();
             sel.addRange(range);
             el.focus();
+        },
+    },
+    computed: {
+        totalPart() {
+            // Parse to number
+            return parseFloat(this.integerPart + "." + this.decimalPart);
         }
     }
 };
@@ -105,6 +116,11 @@ export default {
 }
 
 [contenteditable] {
-    min-width: 0.5em;
+    display: block;
+    /* Convertir a bloque en línea */
+    max-width: fit-content;
+    /* Establecer un ancho mínimo */
+    min-height: 2ch;
+    /* Establecer una altura mínima */
 }
 </style>

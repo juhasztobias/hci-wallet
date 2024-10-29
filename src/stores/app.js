@@ -1,8 +1,11 @@
 // Utilities
-import { defineStore } from 'pinia'
+import { DummyClient } from '@/dummies/client';
+import { defineStore } from 'pinia';
 
-export const useAppStore = defineStore('app', {
-  state: () => ({
-    //
-  }),
+const client = new DummyClient();
+export const useAppStore = defineStore('app', () => {
+  return {
+    client,
+    getContactByEmail: (email) => client.getContactByEmail(email),
+  }
 })
