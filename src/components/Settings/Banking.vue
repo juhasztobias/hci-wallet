@@ -7,9 +7,10 @@
                 placeholder="sol.cielo.arcoiris" outlined></v-text-field>
         </v-card-text>
         <v-card-actions>
-            <v-btn color="secondary" @click="openBottomSheet" class="reestablecer-btn">
+            <v-btn variant="tonal" color="primary" block @click="openBottomSheet" class="reestablecer-btn">
                 Añadir Tarjeta
             </v-btn>
+            <AddCardBottomSheet :isOpen="isBottomSheetOpen" @update:isOpen="isBottomSheetOpen = $event" />
         </v-card-actions>
 
         <!-- Bottom Sheet Component -->

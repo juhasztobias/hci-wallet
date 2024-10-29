@@ -1,7 +1,7 @@
 <template>
-    <v-bottom-sheet :value="isOpen" @input="$emit('update:isOpen', $event)">
-        <v-card outlined>
-            <v-card-title class="text-h6">Añadir Tarjeta de Crédito</v-card-title>
+    <v-bottom-sheet :value="isOpen" @input="$emit('update:isOpen', $event)" class="credit-card-bottom-sheet">
+        <v-card outlined class="credit-card-form">
+            <v-card-title class="text-h6 credit-card-title">Añadir Tarjeta de Crédito</v-card-title>
             <v-card-text>
                 <v-form ref="form" v-model="valid">
                     <v-text-field v-model="cardNumber" label="Número de Tarjeta"
@@ -17,8 +17,8 @@
                         type="password"></v-text-field>
                 </v-form>
             </v-card-text>
-            <v-card-actions>
-                <v-btn color="primary" @click="submit">Guardar Tarjeta</v-btn>
+            <v-card-actions class="credit-card-actions">
+                <v-btn color="primary" @click="submit" class="save-button">Guardar Tarjeta</v-btn>
                 <v-btn text @click="close">Cancelar</v-btn>
             </v-card-actions>
         </v-card>
@@ -57,7 +57,6 @@ export default {
     methods: {
         submit() {
             if (this.$refs.form.validate()) {
-                // Handle form submission logic here
                 console.log('Tarjeta guardada:', {
                     cardNumber: this.cardNumber,
                     cardHolder: this.cardHolder,
@@ -67,7 +66,7 @@ export default {
                 this.snackbar = true; // Show snackbar
                 setTimeout(() => {
                     this.close(); // Close the bottom sheet after snackbar timeout
-                }, 0); // Match this timeout with the snackbar's timeout
+                }, 3000);
             }
         },
         close() {
@@ -77,3 +76,30 @@ export default {
     },
 };
 </script>
+
+<style scoped>
+.credit-card-bottom-sheet {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.credit-card-title {
+    color: #4A4A4A;
+    font-weight: bold;
+    text-align: center;
+}
+
+.credit-card-actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+}
+
+.save-button {
+    color: #fff;
+    background-color: #007bff;
+}
+
+.save-button:hover {
+    background-color: #0056b3;
+}
+</style>
