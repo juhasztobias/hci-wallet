@@ -21,8 +21,9 @@ import { ref } from 'vue';
 import PersonalInfo from '@/components/Settings/PersonalInfo.vue';
 import ContactSecurity from '@/components/Settings/ContactSecurity.vue';
 import Banking from '@/components/Settings/Banking.vue';
-
+const nationalities = ref([]);
 export default {
+
     components: {
         PersonalInfo,
         ContactSecurity,
