@@ -62,3 +62,9 @@ export default {
     },
 };
 </script>
+
+<route lang="yaml">
+meta:
+    layout: dashboard.layout 
+    requiresAuth: true
+</route>

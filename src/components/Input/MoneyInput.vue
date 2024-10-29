@@ -28,65 +28,73 @@
 
 <script>
 export default {
+    props: {
+        modelValue: {
+            type: Number,
+            default: 0
+        }
+    },
     data() {
         return {
-            integerPart: '',
-            decimalPart: '',
+            integerPart: '0',
+            decimalPart: '00'
         };
     },
+    watch: {
+        integerPart: 'emitAmount',
+        decimalPart: 'emitAmount'
+    },
     methods: {
+        emitAmount() {
+            // Combina integerPart y decimalPart para formar el monto completo
+            const amount = parseFloat(`${this.integerPart}.${this.decimalPart}`);
+            this.$emit('update:modelValue', amount); // Emite el valor actualizado para v-model
+        },
         onIntegerInput(event) {
             let content = event.target.innerText;
-            content = content.replace(/\D/g, '');
-            event.target.innerText = content;
-            this.integerPart = content;
+            content = content.replace(/\D/g, ''); // Elimina caracteres no numéricos
+            this.integerPart = content || '0';
             this.setCursorToEnd(event.target);
         },
         onDecimalInput(event) {
             let content = event.target.innerText;
-            content = content.replace(/\D/g, '').slice(0, 2);
-            event.target.innerText = content;
-            this.decimalPart = content;
+            content = content.replace(/\D/g, '').slice(0, 2); // Limita a 2 dígitos decimales
+            this.decimalPart = content.padEnd(2, '0'); // Asegura que siempre tenga 2 dígitos
             this.setCursorToEnd(event.target);
 
-            // Si la parte decimal está vacía, regresar el foco a la parte entera
             if (this.decimalPart.length === 0) {
                 this.$refs.integerInput.focus();
-                this.setCursorToEnd(this.$refs.integerInput); // Asegurar que el cursor esté al final
+                this.setCursorToEnd(this.$refs.integerInput);
             }
         },
         onIntegerKeydown(event) {
             if (event.key === '.' || event.key === ',') {
-                event.preventDefault(); // Evitar que el carácter se agregue al input
+                event.preventDefault();
                 this.$refs.decimalInput.focus();
-                this.setCursorToEnd(this.$refs.decimalInput); // Asegurar que el cursor esté al final
+                this.setCursorToEnd(this.$refs.decimalInput);
             }
         },
         onDecimalKeydown(event) {
             if (event.key === 'Backspace' && this.decimalPart.length === 0) {
-                // Si la parte decimal está vacía y se presiona Backspace, regresar el foco a la parte entera
                 event.preventDefault();
                 this.$refs.integerInput.focus();
-                this.setCursorToEnd(this.$refs.integerInput); // Asegurar que el cursor esté al final
+                this.setCursorToEnd(this.$refs.integerInput);
             }
         },
         setCursorToEnd(el) {
-            // Mover el cursor al final del contenido
             const range = document.createRange();
             const sel = window.getSelection();
             range.selectNodeContents(el);
             range.collapse(false);
             sel.removeAllRanges();
             sel.addRange(range);
-            // Asegurar que el elemento esté enfocado
             el.focus();
-        },
-    },
+        }
+    }
 };
 </script>
 
 <style scoped>
-/* Placeholder para elementos contenteditable */
 [contenteditable]:empty:before {
     content: attr(data-placeholder);
     color: #a0a0a0;
