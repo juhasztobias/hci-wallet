@@ -1,19 +1,26 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { Country } from 'country-state-city';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth-store';
 
-const nombre = ref('')
-const apellido = ref('')
-const nacionalidad = ref('')
-const password = ref('')
-const checkPassword = ref('')
-const email = ref('')
+const nombre = ref('');
+const apellido = ref('');
+const nacionalidad = ref('');
+const password = ref('');
+const checkPassword = ref('');
+const email = ref('');
 const nacionalidades = ref([]);
 const aceptaTerminos = ref(false);
-const router = useRouter()
+const router = useRouter();
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// Snackbar state
+const snackbar = ref({
+  show: false,
+  message: '',
+  color: 'red'
+});
 
 const getCountries = () => {
   const countries = Country.getAllCountries();
@@ -23,55 +30,54 @@ const getCountries = () => {
 onMounted(() => {
   getCountries();
 });
+
+const showSnackbar = (message) => {
+  snackbar.value.message = message;
+  snackbar.value.show = true;
+};
+
 const submitForm = () => {
   if (aceptaTerminos.value && nombre.value != '' && apellido.value != '' && nacionalidad.value != '') {
 
     if (!emailPattern.test(email.value)) {
-      alert('Email invalido')
-      return
+      showSnackbar('Email invalido');
+      return;
     }
     if (password.value != checkPassword.value) {
-      alert("Las contraseñas no coinciden");
+      showSnackbar("Las contraseñas no coinciden");
       return;
     }
 
     try {
-      useAuthStore().register(email.value, password.value, nacionalidad.value)
-      console.log("Going to dashboard")
-      router.push('/dashboard')
-    }
-    catch (err) {
-      alert("error")
+      useAuthStore().register(email.value, password.value, nacionalidad.value);
+      console.log("Going to dashboard");
+      router.push('/dashboard');
+    } catch (err) {
+      showSnackbar("Error en el registro");
     }
 
+  } else if (nombre.value == '') {
+    showSnackbar('Falta completar tu Nombre');
+  } else if (apellido.value == '') {
+    showSnackbar('Falta completar tu Apellido');
+  } else if (nacionalidad.value == '') {
+    showSnackbar('Falta completar tu Nacionalidad');
+  } else {
+    showSnackbar('Debes aceptar los términos y condiciones.');
   }
-  else if (nombre.value == '') {
-    alert('Falta completar tu Nombre')
-  }
-  else if (apellido.value == '') {
-    alert('Falta completar tu Apellido')
-  }
-  else if (nacionalidad.value == '') {
-    alert('Falta completar tu Nacionalidad')
-  }
-  else {
-    alert('Debes aceptar los términos y condiciones.')
-  }
-}
+};
 
 const cancelForm = () => {
-  // Clear form or navigate away
-  nombre.value = ''
-  apellido.value = ''
-  nacionalidad.value = ''
-  email.value = ''
-  contraseña.value = ''
-  contraseñaconf.value = ''
+  nombre.value = '';
+  apellido.value = '';
+  nacionalidad.value = '';
+  email.value = '';
+  password.value = '';
+  checkPassword.value = '';
+  aceptaTerminos.value = false;
 
-  aceptaTerminos.value = false
-
-  router.push('/auth/signin')
-}
+  router.push('/auth/signin');
+};
 </script>
 
 <template>
@@ -86,10 +92,8 @@ const cancelForm = () => {
         required></v-text-field>
       <v-combobox label="Nacionalidad" v-model="nacionalidad" :items="nacionalidades" outlined required></v-combobox>
 
-      <!-- Terms and Conditions Checkbox -->
       <v-checkbox v-model="aceptaTerminos" label="Acepto los Términos y Condiciones de Servicio" required></v-checkbox>
 
-      <!-- Buttons -->
       <v-row>
         <v-col cols="6">
           <v-btn block color="red" @click="cancelForm">Cancelar</v-btn>
@@ -99,6 +103,14 @@ const cancelForm = () => {
         </v-col>
       </v-row>
     </v-form>
+
+    <!-- Snackbar Component -->
+    <v-snackbar v-model="snackbar.show" color="red" timeout="3000">
+      {{ snackbar.message }}
+      <template v-slot:action="{ attrs }">
+        <v-btn text v-bind="attrs" @click="snackbar.show = false">Cerrar</v-btn>
+      </template>
+    </v-snackbar>
   </v-card-text>
 </template>
 
