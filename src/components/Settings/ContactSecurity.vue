@@ -12,11 +12,11 @@
             <!-- Bind the phoneNumber prop -->
             <v-text-field label="Numero de Telefono" :value="phoneNumber" @input="$emit('update:phoneNumber', $event)"
                 placeholder="+1 (555) 019-3476"></v-text-field>
-            <v-divider class="my-4"></v-divider>
-            <div class="text-danger text-center mb-4">
+            <!-- <v-divider class="my-4"></v-divider> -->
+            <!-- <div class="text-danger text-center mb-4">
                 <span>Zona de Peligro</span>
             </div>
-            <v-btn color="red" block @click="resetPassword">Restablecer Contraseña</v-btn>
+            <v-btn color="red" block @click="resetPassword">Restablecer Contraseña</v-btn> -->
         </template>
     </MainCard>
 </template>
