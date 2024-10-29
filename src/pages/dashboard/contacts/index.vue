@@ -66,20 +66,28 @@
             </v-card>
         </section>
         <aside>
+            <v-card elevation="1" class="tw-w-full tw-p-4">
+                <v-btn color="primary" block variant="flat" class="tw-flex-1"
+                    @click="$router.push('/dashboard/contacts/new')">
+                    Agregar contacto
+                </v-btn>
+            </v-card>
         </aside>
     </main>
 </template>
 
 <script setup>
+import { useAuthStore } from '@/stores/auth-store';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 const router = useRouter();
+const authStore = useAuthStore();
 
 const transferContact = (contact) => {
     router.push({
         "path": '/dashboard/transfer',
         "query": {
-            "_to": contact.uid
+            "_to": contact.email
         }
     });
 }
@@ -93,14 +101,7 @@ const filters = [
 
 const headers = []
 
-const contacts = [
-    { uid: "abc123", name: 'Juan', lastName: 'Perez', email: 'juan@gmail.com' },
-    { uid: "abc124", name: 'Maria', lastName: 'Rodriguez', email: 'maria@gmail.com' },
-    { uid: "abc125", name: 'Pedro', lastName: 'Lopez', email: 'pedro@gmail.com' },
-    { uid: "abc126", name: 'Luis', lastName: 'Garcia', email: 'luis@gmail.com' },
-    { uid: "abc127", name: 'Carlos', lastName: 'Hernandez', email: 'carlos@gmail.com' },
-    { uid: "abc128", name: 'Juan', lastName: 'Gomez', email: 'jgomez@gmail.com' },
-]
+const contacts = authStore.getAccount().contacts;
 
 const editContact = (contact) => {
     console.log('Editando:', contact);

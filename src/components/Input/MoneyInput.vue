@@ -1,7 +1,8 @@
 <template>
     <div class="tw-flex tw-flex-col tw-items-center tw-text-primary-500">
         <!-- Etiqueta -->
-        <label class="text-center text-xl font-semibold mb-4 text-gray-800">Ingrese el monto</label>
+        <slot name="prepend"></slot>
+        <!-- <label class="text-center text-xl font-semibold mb-4 text-gray-800">Ingrese el monto</label> -->
 
         <!-- Campo de entrada -->
         <div class="tw-max-w-fit tw-flex tw-gap-1">
@@ -19,9 +20,10 @@
         </div>
 
         <!-- Texto secundario -->
-        <p class="mt-4 text-gray-600 text-base tw-text-primary-300">
+        <slot name="append"></slot>
+        <!-- <p class="mt-4 text-gray-600 text-base tw-text-primary-300">
             Dinero disponible: <span class="font-semibold">$100</span>
-        </p>
+        </p> -->
     </div>
 </template>
 

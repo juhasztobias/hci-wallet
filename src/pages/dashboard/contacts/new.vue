@@ -3,7 +3,9 @@ import MainCard from '@/components/MainCard.vue';
 import { useAppStore } from '@/stores/app';
 import { useAuthStore } from '@/stores/auth-store';
 import { computed } from 'vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const authStore = useAuthStore();
 const email = ref('');
 const snackbar = ref(false);
@@ -21,6 +23,7 @@ const addContact = async () => {
         snackbarColor.value = 'success';
         snackbar.value = true;
         snackbarText.value = 'Contacto agregado';
+        setTimeout(() => router.push('/dashboard/contacts'), 2000);
     } catch (error) {
         snackbarColor.value = 'red';
         snackbarText.value = error.message;
