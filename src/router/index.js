@@ -34,13 +34,32 @@ router.isReady().then(() => {
   localStorage.removeItem('vuetify:dynamic-reload')
 })
 
-router.beforeEach((to, from, next) => {
-  const authStore = useAuthStore();
+const flattenRoutes = (routes) => {
+  return routes.reduce((acc, route) => {
+    if (route.children) {
+      return [...acc, ...flattenRoutes(route.children)];
+    }
+    return [...acc, route];
+  }, []); 
+}
 
-  if(!authStore.isLoggedIn && to.meta.requiresAuth) {
-    next('/auth/signin');
-    return;
-  }
+router.beforeEach((to, from) => {
+  const authStore = useAuthStore();
+  const validRoutes =
+    flattenRoutes(routes)
+      .reduce((acc, route) => {
+        // Erase last / from name for matching
+        const name = route.name.replace(/\/$/, '');
+        return ({
+          ...acc,
+          [name]: route?.meta?.requiresAuth ?? false,
+          [route.name]: route?.meta?.requiresAuth ?? false,
+        })
+      }, {});
+  
+  if (validRoutes[to.path] === undefined) return { name: '/error/404' };
+  if (!authStore.isLoggedIn && validRoutes[to.path])
+    return { name: '/auth/signin' };
 
   const authPaths = [
     '/auth/signin', 
@@ -48,12 +67,9 @@ router.beforeEach((to, from, next) => {
     '/auth/forgot-password', 
     '/auth/reset-password'
   ];
-  if(authStore.isLoggedIn && authPaths.includes(to.path)) {
-    next('/dashboard');
-    return;
-  }
+  if(authStore.isLoggedIn && authPaths.includes(to.path)) return { name: '/dashboard' };
 
-  next();
+  return true;
 })
 
 export default router
