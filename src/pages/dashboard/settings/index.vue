@@ -1,26 +1,28 @@
 <template>
-    <v-container class="py-10 px-6" max-width="600px">
-        <PersonalInfo :nombre="nombre" :apellido="apellido" :nationality="nationality" :nationalities="nationalities" />
-        <ContactSecurity v-model:phoneNumber="phoneNumber" :resetPassword="yourResetPasswordMethod" />
-        <Banking v-model:alias="alias" />
-
-        <!-- Footer Buttons -->
-        <v-row>
-            <v-col cols="6">
-                <v-btn text block color="grey" @click="cancelChanges">Cancelar</v-btn>
-            </v-col>
-            <v-col cols="6">
-                <v-btn color="primary" block @click="saveChanges">Guardar Cambios</v-btn>
-            </v-col>
-        </v-row>
-    </v-container>
+    <div class="tw-grid tw-grid-cols-[1fr,.4fr] tw-gap-3 tw-py-2 tw-items-start">
+        <section class="tw-grid tw-gap-4 tw-max-w-[900px]">
+            <PersonalInfo :nombre="nombre" :apellido="apellido" :nationality="nationality"
+                :nationalities="nationalities" />
+            <ContactSecurity v-model:phoneNumber="phoneNumber" :resetPassword="yourResetPasswordMethod" />
+            <Banking v-model:alias="alias" />
+        </section>
+        <aside class="tw-sticky tw-top-0 tw-flex tw-gap-3 tw-flex-col">
+            <MainCard>
+                <template #content>
+                    <v-btn color="primary" block @click="saveChanges">Guardar Cambios</v-btn>
+                    <v-btn text block color="grey" @click="cancelChanges">Cancelar</v-btn>
+                </template>
+            </MainCard>
+        </aside>
+    </div>
 </template>
 
 <script>
-import { ref } from 'vue';
-import PersonalInfo from '@/components/Settings/PersonalInfo.vue';
-import ContactSecurity from '@/components/Settings/ContactSecurity.vue';
+import MainCard from '@/components/MainCard.vue';
 import Banking from '@/components/Settings/Banking.vue';
+import ContactSecurity from '@/components/Settings/ContactSecurity.vue';
+import PersonalInfo from '@/components/Settings/PersonalInfo.vue';
+import { ref } from 'vue';
 const nationalities = ref([]);
 export default {
 

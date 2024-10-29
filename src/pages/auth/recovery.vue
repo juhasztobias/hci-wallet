@@ -1,4 +1,5 @@
 <script setup>
+import { ref } from 'vue';
 import { useAuthStore } from '@/stores/auth-store';
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
@@ -63,13 +64,13 @@ const cancelForm = () => {
         Cancelar
       </v-btn>
 
-      <!-- Submit Button -->
-      <v-btn @click="handleEmailSubmission" color="primary">
+      <!-- Submit Button with Loading Animation -->
+      <v-btn @click="handleEmailSubmission" color="primary" :loading="loading">
         Enviar
       </v-btn>
     </div>
 
-    <v-snackbar v-model="show_err" color="red" timeout="3000">
+    <v-snackbar v-model="show_err" color="red">
       {{ error_msg }}
       <template #action>
         <v-btn color="white" @click="show_err = false">Cerrar</v-btn>

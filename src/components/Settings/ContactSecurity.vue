@@ -1,8 +1,14 @@
 <template>
-    <v-card outlined class="mb-6">
-        <v-card-title class="text-h6">Contacto y Seguridad</v-card-title>
-        <v-card-subtitle>Actualiza tus datos de contacto para mantenernos en comunicación contigo.</v-card-subtitle>
-        <v-card-text>
+    <MainCard>
+        <template #header>
+            <h1 class="tw-text-lg tw-font-semibold tw-text-primary-100">
+                Contacto y Seguridad
+            </h1>
+            <p class="tw-text-sm tw-text-gray-200">
+                Actualiza tus datos de contacto para mantenernos en comunicación contigo.
+            </p>
+        </template>
+        <template #content>
             <v-text-field label="Numero de Telefono" :value="phoneNumber" @input="$emit('update:phoneNumber', $event)"
                 placeholder="+1 (555) 019-3476"></v-text-field>
             <v-divider class="my-4"></v-divider>
@@ -10,8 +16,8 @@
                 <span>Zona de Peligro</span>
             </div>
             <v-btn color="red" block @click="resetPassword">Restablecer Contraseña</v-btn>
-        </v-card-text>
-    </v-card>
+        </template>
+    </MainCard>
 </template>
 
 <script>
