@@ -17,7 +17,7 @@ const goBack = () => {
     </div>
 
     <!-- Botón para volver al inicio -->
-    <v-btn class="back-btn !tw-bg-primary-600" size="large" @click="goBack">¿Volvemos al inicio?</v-btn>
+    <v-btn class="back-btn !tw-bg-primary-600" size="x-large" @click="goBack">¿Volvemos al inicio?</v-btn>
   </v-container>
   <!-- Sección de imagen -->
   <div class="image-section">
