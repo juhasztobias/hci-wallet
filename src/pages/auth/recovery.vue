@@ -1,36 +1,48 @@
 <script setup>
 import { useAuthStore } from '@/stores/auth-store';
 import { useRouter } from 'vue-router';
+import { ref } from 'vue';
+
 const router = useRouter();
-const email_text = ref('')
-const error_msg = ref('')
-const show_err = ref(false)
+const email_text = ref('');
+const error_msg = ref('');
+const show_err = ref(false);
+
+const validateEmail = (email) => {
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return re.test(String(email).toLowerCase());
+};
 
 const handleEmailSubmission = async () => {
-  let email = email_text.value
+  let email = email_text.value;
   console.log("Submitted email:", email);
 
+  // Validate email format
+  if (!validateEmail(email)) {
+    error_msg.value = 'El correo electrónico ingresado no es válido';
+    show_err.value = true;
+    return;
+  }
+
   try {
-    await useAuthStore().forgotPassword(email)
+    await useAuthStore().forgotPassword(email);
     router.push({
       path: '/auth/recoveryCode',
-      query: { email: email }
+      query: { email: email },
     });
+  } catch (err) {
+    error_msg.value = err.message;
+    show_err.value = true;
   }
-  catch (err) {
-    error_msg.value = err.message
-    show_err.value = true
-  }
-}
+};
+
 const cancelForm = () => {
   router.push('/auth/signin');
-}
+};
 </script>
-
 
 <template>
   <v-container>
-
     <div class="tw-text-2xl tw-text-primary-600 tw-font-semibold tw-text-left">
       Restablecer contraseña
     </div>
@@ -42,7 +54,6 @@ const cancelForm = () => {
     <!-- Email Input -->
     <v-text-field v-model="email_text" label="Correo electrónico" placeholder="Correo electrónico" type="email"
       class="mt-6" required></v-text-field>
-
 
     <!-- Button Container -->
     <div class="mt-6 d-flex d-flex justify-space-between">
@@ -57,8 +68,12 @@ const cancelForm = () => {
         Enviar
       </v-btn>
     </div>
-    <v-snackbar v-model="show_err">
+
+    <v-snackbar v-model="show_err" color="red" timeout="3000">
       {{ error_msg }}
+      <template #action>
+        <v-btn color="white" @click="show_err = false">Cerrar</v-btn>
+      </template>
     </v-snackbar>
   </v-container>
 </template>

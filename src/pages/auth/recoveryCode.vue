@@ -1,8 +1,10 @@
 <script>
 import { useAuthStore } from '@/stores/auth-store';
+
 export default {
     created() {
         const email = this.$route.query.email;
+        const code = this.$route.query.code;
         console.log("Correo electrónico recibido:", email);
 
         if (email) {
@@ -10,44 +12,63 @@ export default {
         } else {
             console.error("No se recibió ningún correo electrónico");
         }
+        if (code) {
+            this.code = code;
+        } else {
+            console.error("No se recibió ningún código");
+        }
     },
     data() {
         return {
             recoveryEmail: '',
-            recoveryCode: ''
+            password: '',
+            checkPassword: '',
+            code: '',
+            error_msg: '',
+            show_err: false,
+            loading: false, // Loading state
         };
     },
     methods: {
-        async submitRecoveryCode() {
-            console.log("Submitting recovery code:", this.recoveryCode);
-            console.log("Email for recovery code:", this.recoveryEmail);
+        validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(String(email).toLowerCase());
+        },
+        async submitForm() {
+            console.log("Form submitted with:", this.password, this.checkPassword);
 
-            if (!this.recoveryCode) {
-                alert('Por favor, ingresa un código de recuperación.');
+            // Validate email format
+            if (!this.validateEmail(this.recoveryEmail)) {
+                this.error_msg = 'El correo electrónico ingresado no es válido';
+                this.show_err = true;
                 return;
             }
 
-            console.log("Código de recuperación enviado al mail:", this.recoveryCode);
+            // Check if password fields match
+            if (this.password !== this.checkPassword) {
+                this.error_msg = 'Las contraseñas no coinciden';
+                this.show_err = true;
+                return;
+            }
+
+            this.loading = true; // Set loading to true
 
             try {
-                const isValid = await useAuthStore().isValidResetToken(this.recoveryEmail, this.recoveryCode);
-                console.log("Is valid:", isValid);
-                if (isValid) {
-                    alert('Código de recuperación enviado con éxito.');
-                    this.$router.push({
-                        path: '/auth/resetPassword',
-                        query: { email: this.recoveryEmail, code: this.recoveryCode }
-
-                    });
-
-                }
-            } catch (error) {
-                console.error("Error al validar el código de recuperación:", error);
-                alert('El código de recuperación no es válido. Por favor, inténtalo de nuevo.');
+                await useAuthStore().resetPassword(this.recoveryEmail, this.code, this.password);
+                alert("La contraseña se ha cambiado con éxito");
+                this.$router.push('/auth/signin');
+            } catch (err) {
+                console.error(err);
+                this.error_msg = "La contraseña no es válida. Asegúrate de que cumpla con los requisitos.";
+                this.show_err = true;
+            } finally {
+                this.loading = false; // Reset loading state
             }
         },
-        goBack() {
-            this.$router.push('/auth/recovery');
+        cancelForm() {
+            this.checkPassword = '';
+            this.password = '';
+            this.$router.push('/auth/signin');
         }
     }
 };
@@ -55,44 +76,48 @@ export default {
 
 <template>
     <v-container>
+        <!-- Header -->
         <div class="tw-text-2xl tw-text-primary-600 tw-font-semibold tw-text-left">
             Restablecer contraseña
         </div>
         <div class="tw-h-2 tw-bg-primary-200 tw-w-[10vw] tw-my-2" />
-        <div class="tw-text-lg tw-text-primary-600 tw-font-light tw-text-left mt-4">
-            Te hemos enviado un código a tu correo electrónico: <strong>{{ recoveryEmail }}</strong>
+        <div class="tw-text-xl tw-text-primary-600 tw-font-light tw-text-left">
+            Cambia tu contraseña
         </div>
 
-        <div class="tw-flex tw-flex-col tw-items-center">
-            <div>
-                <p class="tw-text-h6 tw-ml-[.5rem] tw-mt-10 tw-font-semibold tw-text-primary-600 ">
-                    Código de Verificación
-                </p>
-                <v-otp-input v-model="recoveryCode" focus-all autofocus />
-            </div>
-        </div>
-        <div class="tw-flex tw-mt-10 tw-justify-between">
-            <v-btn variant="text" @click="goBack">
-                <v-icon>mdi-arrow-left</v-icon>
-                Volver
-            </v-btn>
-            <v-btn color="primary" variant="tonal" @click="submitRecoveryCode">
-                Continuar
-            </v-btn>
-        </div>
+        <v-form @submit.prevent="submitForm">
+            <v-text-field label="*******" v-model="password" placeholder="Nueva Contraseña" outlined
+                required></v-text-field>
+            <v-text-field label="*******" v-model="checkPassword" placeholder="Repeti la contraseña" outlined
+                required></v-text-field>
+        </v-form>
+
+        <!-- Buttons -->
+        <v-row>
+            <v-col cols="6">
+                <v-btn block color="red" @click="cancelForm">Cancelar</v-btn>
+            </v-col>
+            <v-col cols="6">
+                <v-btn block color="primary" @click="submitForm" :disabled="loading">
+                    <template v-if="loading">
+                        <v-progress-circular indeterminate size="24" color="white"></v-progress-circular>
+                    </template>
+                    <template v-else>
+                        Confirmar
+                    </template>
+                </v-btn>
+            </v-col>
+        </v-row>
+
+        <!-- Error Snackbar -->
+        <v-snackbar v-model="show_err" color="red" timeout="3000">
+            {{ error_msg }}
+            <template #action>
+                <v-btn color="white" @click="show_err = false">Cerrar</v-btn>
+            </template>
+        </v-snackbar>
     </v-container>
 </template>
-
-<style scoped>
-.v-otp-input {
-    justify-content: left !important;
-    padding: 0 !important;
-}
-
-.v-otp-input__content {
-    padding-left: 0rem !important;
-}
-</style>
 
 <route lang="yaml">
 meta:
