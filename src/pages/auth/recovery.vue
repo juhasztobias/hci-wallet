@@ -1,36 +1,41 @@
 <script setup>
+import { ref } from 'vue';
 import { useAuthStore } from '@/stores/auth-store';
 import { useRouter } from 'vue-router';
+
 const router = useRouter();
-const email_text = ref('')
-const error_msg = ref('')
-const show_err = ref(false)
+const email_text = ref('');
+const error_msg = ref('');
+const show_err = ref(false);
+const loading = ref(false); // Loading state
 
 const handleEmailSubmission = async () => {
-  let email = email_text.value
+  let email = email_text.value;
   console.log("Submitted email:", email);
 
+  loading.value = true; // Start loading
+
   try {
-    await useAuthStore().forgotPassword(email)
+    await useAuthStore().forgotPassword(email);
     router.push({
       path: '/auth/recoveryCode',
       query: { email: email }
     });
+  } catch (err) {
+    error_msg.value = err.message;
+    show_err.value = true;
+  } finally {
+    loading.value = false; // Stop loading
   }
-  catch (err) {
-    error_msg.value = err.message
-    show_err.value = true
-  }
-}
+};
+
 const cancelForm = () => {
   router.push('/auth/signin');
-}
+};
 </script>
-
 
 <template>
   <v-container>
-
     <div class="tw-text-2xl tw-text-primary-600 tw-font-semibold tw-text-left">
       Restablecer contraseña
     </div>
@@ -43,7 +48,6 @@ const cancelForm = () => {
     <v-text-field v-model="email_text" label="Correo electrónico" placeholder="Correo electrónico" type="email"
       class="mt-6" required></v-text-field>
 
-
     <!-- Button Container -->
     <div class="mt-6 d-flex d-flex justify-space-between">
       <!-- Cancel Button -->
@@ -52,12 +56,13 @@ const cancelForm = () => {
         Cancelar
       </v-btn>
 
-      <!-- Submit Button -->
-      <v-btn @click="handleEmailSubmission" color="primary">
+      <!-- Submit Button with Loading Animation -->
+      <v-btn @click="handleEmailSubmission" color="primary" :loading="loading">
         Enviar
       </v-btn>
     </div>
-    <v-snackbar v-model="show_err">
+
+    <v-snackbar v-model="show_err" color="red">
       {{ error_msg }}
     </v-snackbar>
   </v-container>
