@@ -3,7 +3,6 @@
         class="tw-p-4 tw-bg-primary-100 tw-cursor-pointer hover:tw-bg-primary-100 active:tw-bg-primary-200 tw-border tw-border-primary-500 tw-rounded-lg tw-flex tw-justify-between tw-items-center tw-transition-all tw-duration-500 tw-ease-in-out">
         <div class="tw-flex tw-gap-2 tw-items-center">
             <div>
-                <!-- Display icon if provided -->
                 <v-icon v-if="icon" :color="'primary'">{{ icon }}</v-icon>
                 <img v-else src="@/assets/logo.png" alt="Pagozen-logo"
                     class="tw-size-10 tw-rounded-full tw-mix-blend-multiply" />
@@ -25,7 +24,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { defineProps, defineEmits } from 'vue';
 
 const props = defineProps({
     title: {
@@ -47,10 +46,8 @@ const props = defineProps({
     },
 });
 
-const isSelected = ref(props.isSelected);
 const emit = defineEmits(['select']);
 const onSelect = () => {
-    isSelected.value = !isSelected.value;
     emit('select');
 };
 </script>
