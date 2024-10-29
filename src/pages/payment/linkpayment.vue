@@ -1,31 +1,40 @@
 <template>
-    <v-container class="payment-link-container" max-width="400px">
-        <v-card>
-            <v-card-title class="card-header">
-                <span>Te han enviado un link de pago</span>
-            </v-card-title>
-            <v-divider></v-divider>
-
-            <v-card-text>
-                <AmountSection :amount="amount" />
-                <DetailsSection :product="product" :details="details" />
-            </v-card-text>
+    <MainCard class="tw-min-w-[500px]">
+        <template #header>
+            <h1 class="tw-text-lg tw-font-semibold tw-text-primary-100">
+                Te han enviado un link de pago
+            </h1>
+            <p class="tw-text-sm tw-text-gray-200">
+                Para continuar con el pago, dale clic a continuar
+            </p>
+        </template>
+        <template #content>
+            <AmountSection :amount="amount" />
+            <DetailsSection :product="product" :details="details" />
 
             <v-card-actions class="action-buttons">
-                <v-btn text color="grey" @click="cancelPayment" class="cancel-button">
+                <v-btn text color="grey" @click="cancelPayment" class="cancel-button tw-flex-1">
                     Cancelar pago
                 </v-btn>
-                <v-btn color="primary" @click="payNow" class="pay-button">
+                <v-btn variant="flat" color="primary" @click="payNow" class="tw-flex-1">
                     Pagar ahora
                 </v-btn>
             </v-card-actions>
-        </v-card>
-    </v-container>
+        </template>
+    </MainCard>
 </template>
+
+<route lang="yaml">
+meta:
+    layout: float.layout
+    requiresAuth: true
+</route>
+
 
 <script>
 import AmountSection from '@/components/AmountSection.vue';
 import DetailsSection from '@/components/DetailsSection.vue';
+import MainCard from '@/components/MainCard.vue';
 
 
 export default {
@@ -39,6 +48,7 @@ export default {
             amount: 100,
             product: 'Es una prueba',
             details: 'Varios',
+            paymentId: this.$route.query.paymentId
         };
     },
     methods: {
@@ -47,7 +57,6 @@ export default {
             console.log('Payment canceled');
         },
         payNow() {
-            console.log('Processing payment');
             this.$router.push({
                 path: '/transfers/TransferSummary',
                 params: {
@@ -73,8 +82,6 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    min-width: 210vh;
     background-color: #f4f7fa;
 }
 
