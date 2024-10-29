@@ -28,6 +28,9 @@ export default createVuetify({
       variant: 'outlined',
       labelPlacement: 'outside',
       
+    },
+    VSelect: {
+      variant: 'outlined',
     }
   }
 })
