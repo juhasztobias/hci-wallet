@@ -97,7 +97,12 @@ const filters = [
 ]
 const contacts = ref(useContactStore().contacts);
 watchEffect(() => {
-    contacts.value = useContactStore().contacts;
+    contacts.value =
+        useContactStore().contacts.filter(
+            c => c.email.includes(searchValue.value)
+                || c.name.toUpperCase().includes(searchValue.value.toUpperCase())
+                || c.lastName.toUpperCase().includes(searchValue.value.toUpperCase())
+        );
 }, { deep: true });
 
 const transferContact = (contact) => {
