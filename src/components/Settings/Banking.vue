@@ -9,12 +9,14 @@
             </p>
         </template>
         <template #content>
-            <v-text-field label="Tu Alias" :value="alias" @input="$emit('update:alias', $event.target.value)"
-                placeholder="sol.cielo.arcoiris" outlined />
+            <v-text-field label="Tu Alias" v-model:model-value="alias"
+                @input="$emit('update:alias', $event.target.value)" placeholder="sol.cielo.arcoiris" outlined />
             <v-btn color="secondary" @click="openBottomSheet" class="reestablecer-btn">
                 Añadir Tarjeta
             </v-btn>
 
+            <CreditCard v-for="card in cards" :key="card.cardNumber" :cardNumber="card.cardNumber"
+                :cardHolder="card.cardHolder" :expirationDate="card.expiryDate" />
             <add-card-bottom-sheet v-model="isBottomSheetOpen" />
         </template>
     </MainCard>
@@ -22,6 +24,8 @@
 
 <script>
 import AddCardBottomSheet from '@/components/Input/AddCardBottomSheet.vue';
+import { faker } from '@faker-js/faker';
+import CreditCard from '../CreditCard.vue';
 import MainCard from '../MainCard.vue';
 
 export default {
@@ -33,16 +37,37 @@ export default {
             type: String,
             required: true,
         },
+        cards: {
+            type: Array,
+            required: false,
+            default: () => [
+                {
+                    cardNumber: '**** **** **** 3456',
+                    cardHolder: 'Juan Perez',
+                    expiryDate: '12/22',
+                }
+            ]
+        }
     },
     data() {
         return {
             isBottomSheetOpen: false,
+            alias: this.alias,
+            cards: this.cards
         };
     },
     methods: {
         openBottomSheet() {
             this.isBottomSheetOpen = true; // Open the bottom sheet
         },
+
+        addCard() {
+            this.cards.push({
+                cardNumber: faker.finance.creditCardNumber(),
+                cardHolder: 'Juan Perez',
+                expiryDate: '12/22',
+            });
+        }
     },
 };
 </script>

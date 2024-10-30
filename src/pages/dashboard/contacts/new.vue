@@ -42,7 +42,8 @@ const addContact = async () => {
 
             <template #content>
                 <div>
-                    <v-text-field label="Email" v-model="email" placeholder="Nombre" outlined required></v-text-field>
+                    <v-text-field label="Email" v-model="email" placeholder="juanperez@gmail.com" outlined
+                        required></v-text-field>
                 </div>
                 <div v-if="contact" class="tw-flex tw-justify-between tw-gap-3 tw-p-2">
                     <div class="tw-flex tw-gap-4 tw-items-center">
