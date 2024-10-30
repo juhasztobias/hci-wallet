@@ -1,55 +1,72 @@
 <template>
-    <v-container class="payment-method-page" max-width="900px">
-        <v-row style="display: flex; flex-wrap: wrap;">
-            <!-- Column for payment method selection -->
-            <v-col cols="12" md="8">
-                <v-card class="payment-method-card">
-                    <v-card-title class="card-header">
-                        <span>Selecciona un método de pago</span>
-                    </v-card-title>
-
-                    <v-card-text>
-                        <div class="method-list">
+    <div class="tw-grid tw-grid-cols-[1fr,.25fr] tw-gap-4 tw-w-screen tw-px-[10vw]">
+        <section>
+            <MainCard class="tw-min-w-[500px]">
+                <template #header>
+                    <h1 class="tw-text-lg tw-font-semibold tw-text-primary-100">
+                        Selecciona un método de pago
+                    </h1>
+                    <p class="tw-text-sm tw-text-gray-200">
+                        Selecciona el método de pago que prefieras
+                    </p>
+                </template>
+                <template #content>
+                    <div class="tw-space-y-12">
+                        <div class="tw-grid tw-gap-2">
                             <selectable-item v-for="method in paymentMethods" :key="method.value" :title="method.label"
                                 :subtitle="method.description" :icon="method.icon"
                                 :isSelected="selectedMethod === method.value"
                                 @select="updateSelectedMethod(method.value)" />
                         </div>
-                    </v-card-text>
 
-                    <v-card-actions class="action-buttons">
-                        <v-btn text color="grey darken-1" class="cancel-btn" @click="cancelPayment">Cancelar
-                            pago</v-btn>
-                        <v-btn color="primary" class="pay-now-btn" @click="processPayment">Pagar ahora</v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-col>
+                        <div class="tw-flex tw-gap-2">
+                            <v-btn variant="text" color="grey darken-1" class="tw-flex-1"
+                                @click="cancelPayment">Cancelar
+                                pago</v-btn>
+                            <v-btn color="primary" class="tw-flex-1" @click="processPayment">Pagar ahora</v-btn>
+                        </div>
+                    </div>
+                </template>
+            </MainCard>
+        </section>
 
-            <!-- Column for payment details -->
-            <v-col cols="4">
-                <v-card class="payment-details-card">
-                    <v-card-title class="details-header">Detalles del pago</v-card-title>
-                    <v-divider></v-divider>
-                    <v-card-text>
-                        <div class="amount-section">
-                            <span class="amount-label">Monto a pagar</span>
-                            <div class="amount-value">$ 100<span class="amount-decimal">00</span></div>
+        <aside>
+
+            <MainCard>
+                <template #header>
+                    <h1 class="tw-text-lg tw-font-semibold tw-text-primary-100">
+                        Detalles del pago
+                    </h1>
+                </template>
+                <template #content>
+                    <div class="tw-grid tw-gap-8">
+                        <div class="tw-grid">
+                            <span>Monto a pagar</span>
+                            <span class="tw-text-xl tw-font-semibold">
+                                {{ new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(100) }}
+                            </span>
                         </div>
-                        <div class="details-section">
-                            <p><strong>Producto</strong></p>
-                            <p>Es una prueba</p>
-                            <p><strong>Detalles</strong></p>
-                            <p>Varios</p>
+                        <div class="tw-grid tw-gap-2">
+                            <div class="tw-grid">
+                                <span class="tw-text-sm">Producto</span>
+                                <span class="tw-font-semibold">Es una prueba</span>
+                            </div>
+
+                            <div class="tw-grid">
+                                <span class="tw-text-sm">Detalles</span>
+                                <span class="tw-font-semibold">Varios</span>
+                            </div>
                         </div>
-                    </v-card-text>
-                </v-card>
-            </v-col>
-        </v-row>
-    </v-container>
+                    </div>
+                </template>
+            </MainCard>
+        </aside>
+    </div>
 </template>
 
 <script>
 import SelectableItem from '@/components/Input/SimpleBigCheckBox.vue';
+import MainCard from '@/components/MainCard.vue';
 
 export default {
     name: 'PaymentMethodPage',
@@ -89,10 +106,25 @@ export default {
     },
     methods: {
         cancelPayment() {
-            console.log('Pago cancelado');
+            this.$router.back();
         },
         processPayment() {
             console.log('Procesando pago');
+            // DO something...
+
+            this.$router.push({
+                path: '/transfers/TransferWrong',
+                query: {
+                    errorMessage: "Error desconocido"
+                }
+            });
+            // try {
+
+            // } catch (error) { 
+            //     console.log(error);
+
+            // }
+            // this.$router.push('/dashboard');
         },
         updateSelectedMethod(value) {
             this.selectedMethod = value;
@@ -101,96 +133,8 @@ export default {
 };
 </script>
 
-<style scoped>
-.payment-method-page {
-    background-color: #f4f7fa;
-    padding-top: 30px;
-    min-height: 100vh;
-    min-width: 207vh;
-}
-
-.payment-method-card,
-.payment-details-card {
-    border-radius: 8px;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.card-header,
-.details-header {
-    background-color: #1976D2;
-    color: #fff;
-    padding: 16px;
-    border-radius: 8px 8px 0 0;
-}
-
-.method-list {
-    padding: 16px;
-}
-
-.payment-button {
-    margin-bottom: 10px;
-    padding: 16px;
-    border-radius: 8px;
-    border: 2px solid #e0e0e0;
-    background-color: #fff;
-    cursor: pointer;
-    transition: border 0.3s, box-shadow 0.3s;
-}
-
-.payment-button:hover {
-    border: 2px solid #1976D2;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-.payment-button .payment-label {
-    font-weight: bold;
-    font-size: 16px;
-    color: #333;
-}
-
-.payment-button .description {
-    font-size: 14px;
-    color: #666;
-}
-
-.action-buttons {
-    padding: 16px;
-}
-
-.cancel-btn {
-    margin-right: 10px;
-}
-
-.amount-section {
-    margin-bottom: 20px;
-}
-
-.amount-label {
-    font-size: 16px;
-    color: #666;
-}
-
-.amount-value {
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
-}
-
-.amount-decimal {
-    font-size: 16px;
-    color: #666;
-}
-
-.details-section {
-    margin-bottom: 20px;
-}
-
-.details-section p {
-    margin-bottom: 10px;
-}
-
-.details-section strong {
-    font-weight: bold;
-    color: #333;
-}
-</style>
+<route lang="yaml">
+meta:
+    layout: float.layout
+    requiresAuth: true
+</route>

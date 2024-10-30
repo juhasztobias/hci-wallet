@@ -1,25 +1,30 @@
 <template>
-  <v-container class="transfer-summary-container">
+  <div class="tw-grid tw-gap-2">
     <SuccessNotification amount="amount" receiverName="receiverName" bankName="bankName"
       voucherNumber='voucherNumber' />
-
     <TransferDetails senderName="senderName" senderAlias="senderAlias" receiverName="receiverName"
       receiverAlias="receiverAlias" />
 
     <div class="action-buttons">
-      <v-btn variant="plain" color="grey" size="large" @click="saveContact">
+      <v-btn variant="plain" class="tw-text-gray-700" size="large" @click="saveContact">
         Guardar Contacto
       </v-btn>
       <v-btn color="primary" class="confirm-btn" size="large" @click="confirmTransfer">
         Confirmar
       </v-btn>
     </div>
-  </v-container>
+  </div>
 </template>
 
+<route lang="yaml">
+meta:
+    layout: float.layout
+    requiresAuth: true
+</route>
+
 <script>
-import SuccessNotification from '@/components/Transaction/TransferSuccess.vue';
 import TransferDetails from '@/components/Transaction/TransferDetails.vue';
+import SuccessNotification from '@/components/Transaction/TransferSuccess.vue';
 
 export default {
   name: 'TransferSummary',
@@ -59,13 +64,12 @@ export default {
   },
   methods: {
     saveContact() {
-      // Lógica para guardar contacto
-      console.log('Contacto guardado');
+      this.$router.push({
+        "path": "/dashboard/contacts/new",
+      })
     },
     confirmTransfer() {
-      // Lógica para confirmar la transferencia
-      console.log('Transferencia confirmada');
-      th
+      this.$router.push('/dashboard');
     }
   }
 };
@@ -79,7 +83,6 @@ export default {
   padding-top: 20px;
   background-color: #f4f7fa;
   min-height: 100vh;
-  min-width: 210vh;
 }
 
 .header {
