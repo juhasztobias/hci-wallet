@@ -1,6 +1,7 @@
 <template>
     <div @click="onSelect"
-        class="tw-p-4 tw-bg-primary-100 tw-cursor-pointer hover:tw-bg-primary-100 active:tw-bg-primary-200 tw-border tw-border-primary-500 tw-rounded-lg tw-flex tw-justify-between tw-items-center tw-transition-all tw-duration-500 tw-ease-in-out">
+        class="tw-p-4 tw-cursor-pointer hover:tw-bg-primary-100 active:tw-bg-primary-200 tw-border tw-border-primary-500 tw-rounded-lg tw-flex tw-justify-between tw-items-center tw-transition-all tw-duration-500 tw-ease-in-out"
+        :class="isSelected && 'tw-bg-primary-100'">
         <div class="tw-flex tw-gap-2 tw-items-center">
             <div>
                 <v-icon v-if="icon" :color="'primary'">{{ icon }}</v-icon>
@@ -24,7 +25,7 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from 'vue';
+import { defineEmits, defineProps } from 'vue';
 
 const props = defineProps({
     title: {

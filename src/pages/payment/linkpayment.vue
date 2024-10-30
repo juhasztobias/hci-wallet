@@ -58,7 +58,7 @@ export default {
         },
         payNow() {
             this.$router.push({
-                path: '/transfers/TransferSummary',
+                path: '/payment/paymentMethod?paymentId=' + this.paymentId,
                 params: {
                     amount: "100",
                     // Add other parameters as needed
@@ -70,8 +70,6 @@ export default {
                     receiverAlias: "Receiver Alias",
                 }
             });
-
-
         }
     }
 };
