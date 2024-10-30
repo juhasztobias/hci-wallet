@@ -89,6 +89,17 @@ export class User {
         });
     }
     
+    deleteContact = (contact) => {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                const index = this.contacts.findIndex(c => c.email === contact.email);
+                if (index === -1) reject(new ContactError('Contacto no encontrado'));
+                this.contacts.splice(index, 1);
+                resolve();
+            }, LATENCY_MS);
+        });
+    }
+
     /**
      * 
      * @returns {Promise<Contact[]>}

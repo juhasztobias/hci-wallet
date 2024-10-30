@@ -24,6 +24,10 @@ export class DummyAuth {
 
         this.currentToken = token;
         const decoded = JSON.parse(token);
+
+        /**
+         * @type {User}
+         */
         this.currentAccount = usersDict[decoded.email];
     }
 

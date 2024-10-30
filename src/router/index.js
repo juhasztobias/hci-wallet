@@ -57,7 +57,6 @@ router.beforeEach((to, from) => {
         })
       }, {});
   
-  if (validRoutes[to.path] === undefined) return { name: '/error/404' };
   if (!authStore.isLoggedIn && validRoutes[to.path])
     return { name: '/auth/signin' };
 
@@ -69,6 +68,7 @@ router.beforeEach((to, from) => {
   ];
   if(authStore.isLoggedIn && authPaths.includes(to.path)) return { name: '/dashboard' };
 
+  if (validRoutes[to.path] === undefined) return { name: '/error/404' };
   return true;
 })
 
