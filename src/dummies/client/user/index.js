@@ -4,7 +4,7 @@ import { ContactError } from "../contact/error";
 const LATENCY_MS = 200;
 
 export class User {
-    constructor(email, password, name, surname, phone, nationality) {
+    constructor(email, password, name, surname, phone, nationality, alias) {
         if (!email || !password) throw new UserError('Invalid email or password');
         this.email = email;
         this.password = password;
@@ -12,6 +12,7 @@ export class User {
         this.surname = surname;
         this.phone = phone;
         this.nationality = nationality;
+        this.alias = alias;
 
         /**
          * @type {Account[]}
