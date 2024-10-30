@@ -160,6 +160,10 @@ export default {
                 <p>{{ name }}</p>
                 <p class="tw-text-sm tw-font-semibold">Producto</p>
                 <p>{{ detail }}</p>
+                <v-btn>
+                    <v-icon left>mdi-share-variant</v-icon>
+                    Compartir
+                </v-btn>
             </template>
         </MainCard>
     </div>
