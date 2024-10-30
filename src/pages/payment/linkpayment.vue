@@ -58,7 +58,7 @@ export default {
         },
         payNow() {
             this.$router.push({
-                path: '/payment/paymentMethod?paymentId=' + this.paymentId,
+                path: '/payment/paymentMethod',
                 params: {
                     amount: "100",
                     // Add other parameters as needed

@@ -1,53 +1,44 @@
 <template>
-    <div class="transfer-error-page">
-        <TransferError />
-    </div>
-    <div class="action-buttons">
-        <v-btn variant="plain" color="grey" size="large" @click="schedulePayment">
-            Programar Pago
-        </v-btn>
-        <v-btn color="primary" class="confirm-btn" size="large" @click="retryTransfer">
-            Volver a intentar
-        </v-btn>
-    </div>
+    <section class="tw-space-y-8">
+        <TransferError :errorMessage="errorMessage" />
+        <div class="tw-flex tw-gap-2 tw-justify-center tw-items-center">
+            <v-btn class="tw-flex-1" variant="plain" color="grey" size="large" @click="schedulePayment">
+                Programar Pago
+            </v-btn>
+            <v-btn class="tw-flex-1" color="primary" size="large" @click="retryTransfer">
+                Volver a intentar
+            </v-btn>
+        </div>
+    </section>
 </template>
 
+<route lang="yaml">
+meta:
+    layout: float.layout
+    requiresAuth: true
+</route>
+
 <script>
+import TransferError from '@/components/Transaction/TransferError.vue';
+
 export default {
-    props: {
-        errorMessage: {
-            type: String,
-            default: 'Error desconocido'
+    data() {
+        return {
+            errorMessage: this.$route.query.errorMessage ?? 'Error desconocido'
         }
     },
     methods: {
         schedulePayment() {
             // Lógica para programar un pago
             console.log('Programar Pago');
+            this.$router.push({
+                path: '/dashboard/transfer?transferId=' + this.$route.query.transferId,
+            });
         },
         retryTransfer() {
-            // Lógica para volver a intentar la transferencia
-            console.log('Volver a intentar');
+            // Do something...
+            this.$router.push('/dashboard');
         }
     }
 }
 </script>
-
-<style scoped>
-.transfer-error-page {
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    /* Centrar verticalmente */
-}
-
-.action-buttons {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1px;
-    margin-top: 100px;
-}
-</style>
