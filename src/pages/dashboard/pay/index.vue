@@ -1,11 +1,11 @@
 <script>
+import ExpansionPanel from '@/components/ExpansionPanel.vue';
 import MoneyInput from '@/components/Input/MoneyInput.vue';
-import MainCard from '@/components/MainCard.vue';
 import SelectableItem from '@/components/Input/SimpleBigCheckBox.vue';
 export default {
     components: {
         MoneyInput,
-        MainCard,
+        ExpansionPanel,
         SelectableItem // Ensure this is included
     },
     data() {
@@ -35,7 +35,9 @@ export default {
                     description: 'Se le cobrará un 1% de comisión',
                     icon: 'mdi-calendar-month'
                 },
-            ]
+            ],
+            step: 1,
+            location: window.location.origin,
         };
     },
     methods: {
@@ -47,6 +49,9 @@ export default {
             // Logic to handle when the "Continuar" button is clicked
             console.log('Continuar clicked with amount:', this.amount);
             // You can add further processing here
+            this.step++;
+
+            console.log(this.step);
         }
     },
     created() {
@@ -54,13 +59,13 @@ export default {
         if (savedMethod) {
             this.selectedMethod = savedMethod;
         }
-    }
+    },
 };
 </script>
 
 <template>
     <div class="tw-space-y-4">
-        <MainCard>
+        <ExpansionPanel :isOpen="step === 1">
             <template #header>
                 <h1 class="tw-text-lg tw-font-semibold tw-text-primary-100">
                     Nuevo Cobro
@@ -102,8 +107,8 @@ export default {
                     </v-btn>
                 </div>
             </template>
-        </MainCard>
-        <MainCard>
+        </ExpansionPanel>
+        <ExpansionPanel :isOpen="step === 2">
             <template #header>
                 <h1 class="tw-text-lg tw-font-semibold tw-text-primary-100">
                     Confirmacion
@@ -135,7 +140,7 @@ export default {
                 <selectable-item />
                 <div class="tw-flex tw-items-center tw-justify-center tw-space-x-2 tw-py-4">
                     <!-- Cancel Button -->
-                    <v-btn variant="text" class="tw-flex-1">Volver</v-btn>
+                    <v-btn variant="text" class="tw-flex-1" @click="step--">Volver</v-btn>
 
                     <!-- Confirm Button -->
                     <v-btn class="tw-flex-1" @click="handleContinue"> <!-- Add click event -->
@@ -143,8 +148,8 @@ export default {
                     </v-btn>
                 </div>
             </template>
-        </MainCard>
-        <MainCard>
+        </ExpansionPanel>
+        <ExpansionPanel :isOpen="step === 3">
             <template #header>
                 <h1 class="tw-text-lg tw-font-semibold tw-text-primary-100">
                     Link para Cobrar
@@ -152,7 +157,9 @@ export default {
             </template>
             <template #content>
                 <p class="tw-font-semibold">Link para Cobrar</p>
-                <p>https://link.prueba.com/cobrar</p>
+                <a :href="location + '/payment/linkpayment?paymentId=' + step" target="_blank">
+                    {{ location }}/payment/linkpayment?paymentId={{ step }}
+                </a>
                 <p class="tw-text-lg tw-font-semibold">Detalles del cobro:</p>
                 <p class="tw-text-sm tw-font-semibold">Monto</p>
                 <p>{{ amount }}</p>
@@ -165,7 +172,7 @@ export default {
                     Compartir
                 </v-btn>
             </template>
-        </MainCard>
+        </ExpansionPanel>
     </div>
 </template>
 <route lang="yaml">
