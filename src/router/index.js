@@ -63,14 +63,13 @@ router.beforeEach((to, from) => {
   
   if (!authStore.isLoggedIn && (validRoutes[to.path] || validRoutes[to.name] === undefined))
     return { name: '/auth/signin' };
-
   const authPaths = [
     '/auth/signin', 
     '/auth/signup', 
     '/auth/forgot-password', 
     '/auth/reset-password'
   ];
-  if(authStore.isLoggedIn && authPaths.includes(to.path)) return { name: '/dashboard' };
+  if (authStore.isLoggedIn && authPaths.includes(to.path)) return { name: '/dashboard/' };
 
   if (validRoutes[to.path] === undefined) return { name: '/error/404' };
   return true;
