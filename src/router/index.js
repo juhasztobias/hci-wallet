@@ -49,15 +49,19 @@ router.beforeEach((to, from) => {
     flattenRoutes(routes)
       .reduce((acc, route) => {
         // Erase last / from name for matching
-        const name = route.name.replace(/\/$/, '');
+        const nameWithOutSlash = `${route.name.replace(/\/$/, '')}`
+        const nameWithSlash = `${nameWithOutSlash}/`
         return ({
           ...acc,
-          [name]: route?.meta?.requiresAuth ?? false,
-          [route.name]: route?.meta?.requiresAuth ?? false,
+          [nameWithOutSlash]: route?.meta?.requiresAuth ?? false,
+          [nameWithSlash]: route?.meta?.requiresAuth ?? false,
         })
-      }, {});
+      }, {
+        '': undefined,
+        '/': undefined,
+      });
   
-  if (!authStore.isLoggedIn && validRoutes[to.path])
+  if (!authStore.isLoggedIn && (validRoutes[to.path] || validRoutes[to.name] === undefined))
     return { name: '/auth/signin' };
 
   const authPaths = [
