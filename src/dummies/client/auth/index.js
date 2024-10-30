@@ -4,10 +4,10 @@ import { User } from "../user";
 import { AuthError } from "./error/auth.error";
 
 const usersDict = {
-    'juan@gmail.com': new User('juan@gmail.com', '123456', 'Juan', 'Perez', '+56 789012345', 'ES'),
-    'tobiasjuhasz@gmail.com': new User('tobiasjuhasz@gmail.com', '123456', 'Tobias', 'Juhasz', '+56 987654321', 'ES'),
-    'maria@gmail.com':  new User('maria@gmail.com', '123456', 'Maria', 'Rodriguez', '+56 987654321', 'ES'),
-    'ramirogarciaargibay@gmail.com': new User('ramirogarciaargibay@gmail.com', '123456', 'Maria', 'Rodriguez', '+56 987654321', 'ES'),
+    'juan@gmail.com': new User('juan@gmail.com', '123456', 'Juan', 'Perez', '+56 789012345', 'ES', 'juan.pagozen.alias'),
+    'tobiasjuhasz@gmail.com': new User('tobiasjuhasz@gmail.com', '123456', 'Tobias', 'Juhasz', '+56 987654321', 'ES', 'tobias.pagozen.alias'),
+    'maria@gmail.com':  new User('maria@gmail.com', '123456', 'Maria', 'Rodriguez', '+56 987654321', 'ES', 'maria.pagozen.alias'),
+    'ramirogarciaargibay@gmail.com': new User('ramirogarciaargibay@gmail.com', '123456', 'Maria', 'Rodriguez', '+56 987654321', 'ES', 'ramiro.pagozen.alias'),
 }
 
 export const getContactByEmail = (email) => {

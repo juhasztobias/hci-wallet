@@ -61,11 +61,9 @@ const goBack = () => {
 }
 
 .image-section {
-  display: flex;
-  justify-content: flex-end;
-  /* Mueve la imagen hacia la derecha */
-  margin-right: 20rem;
-  width: 50%;
+  position: absolute;
+  bottom: 0;
+  right: 20vw;
 }
 
 .wallet-image {

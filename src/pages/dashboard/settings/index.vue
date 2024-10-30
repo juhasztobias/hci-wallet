@@ -38,7 +38,12 @@ import MainCard from '@/components/MainCard.vue';
 import Banking from '@/components/Settings/Banking.vue';
 import ContactSecurity from '@/components/Settings/ContactSecurity.vue';
 import PersonalInfo from '@/components/Settings/PersonalInfo.vue';
+import { useAuthStore } from '@/stores/auth-store';
 import { ref } from 'vue';
+
+const authStore = useAuthStore();
+const currentUser = ref(authStore.getAccount());
+
 const nationalities = ref([]);
 export default {
 
@@ -68,17 +73,26 @@ export default {
         };
 
         return {
-            nombre,
-            apellido,
-            nationality,
-            phoneNumber,
-            alias,
+            nombre: currentUser.value.name,
+            apellido: currentUser.value.surname,
+            nationality: currentUser.value.nationality,
+            phoneNumber: currentUser.value.phone,
+            alias: currentUser.value.alias,
             nationalities,
             resetPassword,
             cancelChanges,
             saveChanges,
         };
     },
+    watch: {
+        currentUser(newUser) {
+            this.nombre = newUser.name;
+            this.apellido = newUser.surname;
+            this.nationality = newUser.nationality;
+            this.phoneNumber = newUser.phone;
+            this.alias = newUser.alias;
+        }
+    }
 };
 </script>
 

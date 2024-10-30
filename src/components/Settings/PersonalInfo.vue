@@ -11,15 +11,15 @@
         <template #content>
             <v-row>
                 <v-col cols="12" md="6">
-                    <v-text-field label="Nombre" :value="nombre" @input="$emit('update:nombre', $event.target.value)"
-                        outlined />
+                    <v-text-field label="Nombre" v-model:model-value="nombre"
+                        @input="$emit('update:nombre', $event.target.value)" outlined />
                 </v-col>
                 <v-col cols="12" md="6">
-                    <v-text-field label="Apellido" :value="apellido"
+                    <v-text-field label="Apellido" v-model:model-value="apellido"
                         @input="$emit('update:apellido', $event.target.value)" outlined />
                 </v-col>
                 <v-col cols="12">
-                    <v-select label="Nacionalidad" :items="nationalities" :value="nationality"
+                    <v-select label="Nacionalidad" :items="nationalities" v-model:model-value="nationality"
                         @input="$emit('update:nationality', $event.target.value)" outlined />
                 </v-col>
             </v-row>
@@ -37,6 +37,16 @@ export default {
         nationality: String,
         nationalities: Array,
     },
+    data() {
+        return {
+            nombre: this.nombre,
+            apellido: this.apellido,
+            nationality: this.nationality,
+            nationalities: this.nationalities,
+            phoneNumber: this.phoneNumber,
+            alias: this.alias,
+        }
+    }
 };
 </script>
 
