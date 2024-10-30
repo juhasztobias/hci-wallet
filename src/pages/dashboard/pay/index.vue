@@ -132,7 +132,7 @@ export default {
                         <p>{{ detail }}</p>
                     </div>
                 </div>
-                <selectable-item :key="selectedMethod.value" />
+                <selectable-item />
                 <div class="tw-flex tw-items-center tw-justify-center tw-space-x-2 tw-py-4">
                     <!-- Cancel Button -->
                     <v-btn variant="text" class="tw-flex-1">Volver</v-btn>
