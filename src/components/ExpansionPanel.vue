@@ -1,6 +1,6 @@
 <template>
     <v-expansion-panels hide-actions elevation="2" class="tw-w-full tw-p-0 tw-bg-primary-100">
-        <v-expansion-panel :disabled="isExpanded">
+        <v-expansion-panel :value="isExpanded" :disabled="!isExpanded">
             <v-expansion-panel-title :class="headerClases">
                 <div class="tw-flex tw-gap-2 tw-items-center">
                     <slot name="header"></slot>
@@ -21,17 +21,12 @@ export default {
     props: {
         isOpen: {
             type: Boolean,
-            default: true,
-        },
-    },
-    data() {
-        return {
-            headerClases: 'tw-flex tw-flex-col tw-p-5',
-        };
+            default: false,
+        }
     },
     methods: {
         togglePanel() {
-            this.isOpen = !this.isOpen;
+            this.$emit('update:modelValue', !this.modelValue);
         },
     },
     computed: {
@@ -46,5 +41,4 @@ export default {
         },
     },
 };
-
 </script>

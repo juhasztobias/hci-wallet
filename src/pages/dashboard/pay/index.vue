@@ -19,25 +19,27 @@ export default {
             paymentOptions: [
                 {
                     label: 'Inmediato',
-                    value: 'available-money',
+                    value: 'now',
                     description: 'Se le cobrará un 5% de comisión',
                     icon: 'mdi-arrow-down-thin'
                 },
                 {
                     label: 'En 15 dias',
-                    value: 'available-money',
+                    value: '15d',
                     description: 'Se le cobrará un 3% de comisión',
                     icon: 'mdi-timer-outline'
                 },
                 {
                     label: 'En 30 dias',
-                    value: 'available-money',
+                    value: '30d',
                     description: 'Se le cobrará un 1% de comisión',
                     icon: 'mdi-calendar-month'
                 },
             ],
             step: 1,
             location: window.location.origin,
+            showErr: false,
+            errorMessage: '',
         };
     },
     methods: {
@@ -49,6 +51,17 @@ export default {
             // Logic to handle when the "Continuar" button is clicked
             console.log('Continuar clicked with amount:', this.amount);
             // You can add further processing here
+
+            // When the user is on step 1 check if the values are valid
+            if (this.step === 1) {
+                if (!this.amount || !this.name || !this.type || !this.detail) {
+                    this.errorMessage = 'Por favor ingrese todos los datos';
+                    this.showErr = true;
+                    return;
+                }
+            }
+
+            // this.step++;
             this.step++;
 
             console.log(this.step);
@@ -65,7 +78,7 @@ export default {
 
 <template>
     <div class="tw-space-y-4">
-        <ExpansionPanel :isOpen="step === 1">
+        <ExpansionPanel :isOpen.sync="step === 1">
             <template #header>
                 <h1 class="tw-text-lg tw-font-semibold tw-text-primary-100">
                     Nuevo Cobro
@@ -79,10 +92,10 @@ export default {
                     <MoneyInput v-model="amount" />
                 </div>
                 <div class="tw-flex tw-justify-between tw-items-center tw-gap-3 tw-p-4">
-                    <v-text-field label="Nombre del producto o servicio" v-model="name" />
+                    <v-text-field label="Nombre del producto o servicio" v-model="name" required />
                     <v-select :items="['Servicio', 'Producto', 'Otro']" label="Seleccione el tipo de cobro"
-                        v-model:="type" />
-                    <v-text-field label="Detalles" v-model="detail" />
+                        v-model:="type" required />
+                    <v-text-field label="Detalles" v-model="detail" required />
                 </div>
                 <div class="tw-flex tw-flex-col tw-items-start">
                     <label class="tw-text-l tw-font-semibold tw-text-blue-600 tw-ml-5">Seleccione el plazo en el que se
@@ -120,7 +133,12 @@ export default {
                         Ingrese Valor a Cobrar
                     </h1>
                     <h1 class="tw-text-4xl tw-font-semibold">
-                        {{ amount }} <!-- Display the amount here -->
+                        {{
+                            new Intl.NumberFormat('es-AR', {
+                                style: 'currency',
+                                currency: 'ARS',
+                            }).format(amount)
+                        }} <!-- Display the amount here -->
                     </h1>
                 </div>
                 <div class="tw-flex tw-flex-col sm:tw-flex-row tw-justify-between tw-items-center tw-gap-2 tw-p-2">
@@ -137,7 +155,11 @@ export default {
                         <p>{{ detail }}</p>
                     </div>
                 </div>
-                <selectable-item />
+                <div v-for="method in paymentOptions">
+                    <selectable-item v-if="method.value === selectedMethod" :key="method.value" :title="method.label"
+                        :subtitle="method.description" :icon="method.icon" :isSelected="selectedMethod === method.value"
+                        @select="updateSelectedMethod(method.value)" />
+                </div>
                 <div class="tw-flex tw-items-center tw-justify-center tw-space-x-2 tw-py-4">
                     <!-- Cancel Button -->
                     <v-btn variant="text" class="tw-flex-1" @click="step--">Volver</v-btn>
@@ -162,7 +184,12 @@ export default {
                 </a>
                 <p class="tw-text-lg tw-font-semibold">Detalles del cobro:</p>
                 <p class="tw-text-sm tw-font-semibold">Monto</p>
-                <p>{{ amount }}</p>
+                <p>{{
+                    new Intl.NumberFormat('es-AR', {
+                        style: 'currency',
+                        currency: 'ARS',
+                    }).format(amount)
+                }}</p>
                 <p class="tw-text-sm tw-font-semibold">Producto</p>
                 <p>{{ name }}</p>
                 <p class="tw-text-sm tw-font-semibold">Producto</p>
@@ -173,6 +200,10 @@ export default {
                 </v-btn>
             </template>
         </ExpansionPanel>
+
+        <v-snackbar v-model="showErr" color="red">
+            {{ errorMessage }}
+        </v-snackbar>
     </div>
 </template>
 <route lang="yaml">
