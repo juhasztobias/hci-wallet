@@ -23,9 +23,9 @@ const items = ref([
         to: '/dashboard/settings'
     },
     {
-        title: 'Link de Pago',
+        title: 'Pagos y Cobros',
         icon: 'mdi-cash-check',
-        to: '/dashboard/settings'
+        to: '/dashboard/pay'
     }
 ])
 
