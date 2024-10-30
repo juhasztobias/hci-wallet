@@ -21,6 +21,11 @@ const items = ref([
         title: 'Configuración',
         icon: 'mdi-cog',
         to: '/dashboard/settings'
+    },
+    {
+        title: 'Link de Pago',
+        icon: 'mdi-cash-check',
+        to: '/dashboard/settings'
     }
 ])
 
