@@ -111,7 +111,20 @@ export default {
         processPayment() {
             console.log('Procesando pago');
             // DO something...
-            this.$router.push('/dashboard');
+
+            this.$router.push({
+                path: '/transfers/TransferWrong',
+                query: {
+                    errorMessage: "Error desconocido"
+                }
+            });
+            // try {
+
+            // } catch (error) { 
+            //     console.log(error);
+
+            // }
+            // this.$router.push('/dashboard');
         },
         updateSelectedMethod(value) {
             this.selectedMethod = value;
